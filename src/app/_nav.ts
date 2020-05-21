@@ -5,6 +5,48 @@ export const navItems: INavData[] = [
   {
     name: 'Users',
     url: '/user',
-    icon: 'icon-speedometer'
-  }
+    icon: 'fa fa-user-circle fa-lg'
+  },
+  {
+    name: 'Pages',
+    url: '/buttons',
+    icon: 'fa fa-newspaper-o fa-lg',
+    children: [
+      {
+        name: 'Home',
+        url: '/buttons/buttons',
+      },
+      {
+        name: 'About',
+        url: '/buttons/dropdowns',
+      },
+      {
+        name: 'Service',
+        url: '/buttons/brand-buttons',
+        children: [
+          {
+            name: 'Job Classification',
+            url: '/buttons/dropdowns',
+          },
+          {
+            name: 'Basic Reference Verification',
+            url: '/buttons/dropdowns',
+          },
+          {
+            name: 'Organizational Design',
+            url: '/buttons/dropdowns',
+          },
+          {
+            name: 'FAQ',
+            url: '/buttons/dropdowns',
+          },
+        ]
+      },
+      {
+        name: 'Contact',
+        url: '/buttons/dropdowns',
+      },
+    ]
+  },
+
 ];
