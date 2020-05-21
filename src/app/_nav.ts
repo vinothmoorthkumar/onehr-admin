@@ -9,12 +9,12 @@ export const navItems: INavData[] = [
   },
   {
     name: 'Pages',
-    url: '/buttons',
+    url: '/pages',
     icon: 'fa fa-newspaper-o fa-lg',
     children: [
       {
         name: 'Home',
-        url: '/buttons/buttons',
+        url: '/pages/home',
       },
       {
         name: 'About',
