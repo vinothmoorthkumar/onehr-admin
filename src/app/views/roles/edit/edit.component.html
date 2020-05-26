@@ -3,8 +3,10 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    Roles Add
+                    <span *ngIf="!edit">Roles Add</span>
+                    <span *ngIf="edit">Roles Edit</span>
                 </div>
+                
                 <!-- card-body start -->
                 <div class="card-body">
                     <input type="text" class="form-control" [(ngModel)] ="name" placeholder="Enter the Name of Role" required>
@@ -22,7 +24,9 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <button class="btn btn-primary float-right" type="submit">Submit</button>
+                        <button class="btn btn-primary float-right" *ngIf="!edit" type="submit">Submit</button>
+                        <button class="btn btn-primary float-right" *ngIf="edit" type="submit">Update</button>
+
                     </form>
                     <div class="invalid-feedback" *ngIf="submitted && form?.errors">Select atleast One </div>
                 </div>

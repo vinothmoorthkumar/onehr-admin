@@ -5,7 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor, ErrorInterceptor } from './helpers';
-
+import {RoleResolverService} from './views/roles/edit/edit.resolve';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
@@ -69,12 +69,13 @@ import { ChartsModule } from 'ng2-charts';
     LoginComponent,
   ],
   providers: [
+    RoleResolverService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     
     {
     provide: LocationStrategy,
-    useClass: HashLocationStrategy
+    useClass: HashLocationStrategy,
   }
 ],
   bootstrap: [ AppComponent ]

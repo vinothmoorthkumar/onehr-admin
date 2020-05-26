@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { ListComponent } from './list/list.component';
 import { EditComponent } from './edit/edit.component';
-
+import { RoleResolverService } from './edit/edit.resolve';
 const routes: Routes = [
   {
     path: '',
@@ -11,25 +11,33 @@ const routes: Routes = [
       title: 'role'
     },
     children: [
-        {
-          path: '',
-          redirectTo: 'list'
+      {
+        path: '',
+        redirectTo: 'list'
+      },
+      {
+        path: 'list',
+        component: ListComponent,
+        data: {
+          title: 'List'
+        }
+      },
+      {
+        path: 'add',
+        component: EditComponent,
+        data: {
+          title: 'Add'
+        }
+      },
+      {
+        path: 'edit/:id',
+        component: EditComponent,
+        data: {
+          title: 'Edit'
         },
-        {
-          path: 'list',
-          component: ListComponent,
-          data: {
-            title: 'List'
-          }
-        },
-        {
-            path: 'add',
-            component: EditComponent,
-            data: {
-              title: 'Add'
-            }
-          }
-      ]
+        resolve: { role: RoleResolverService }
+      }
+    ]
   }
 ];
 
@@ -37,4 +45,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class RolesRoutingModule {}
+export class RolesRoutingModule { }

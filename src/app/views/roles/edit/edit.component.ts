@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormArray, FormControl } from '@angular/forms';
+import { RolesService } from '../../../services';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-edit',
@@ -10,6 +12,9 @@ export class EditComponent implements OnInit {
   form: FormArray;
   name: string;
   submitted = false;
+  edit = false;
+  editObj: any;
+  id: any;
   ModulessData = [
     {
       module: 'users',
@@ -44,17 +49,29 @@ export class EditComponent implements OnInit {
     }
   ];
 
-  
 
-  constructor(private formBuilder: FormBuilder) {
+
+  constructor(private router: Router,
+    private route: ActivatedRoute,
+    private formBuilder: FormBuilder, private service: RolesService) {
 
   }
 
   ngOnInit(): void {
-    this.form = new FormArray(this.ModulessData.map(x => new FormArray([])),this.customValidatorOverAll(1));
+    this.id = this.route.snapshot.params.id;
 
-    //this give so formArray as hobbies you get
-    this.ModulessData.forEach((x, index) => {  //for each hobiee
+
+    if (this.id) {
+      this.edit = true;
+      this.route.data.subscribe((response) => {
+        this.editObj = response.role.data;
+        this.name = this.editObj.name;
+        this.ModulessData = this.editObj.acl;
+        console.log('data',response.role.data)
+      });
+    }
+    this.form = new FormArray(this.ModulessData.map(x => new FormArray([])), this.customValidatorOverAll(1));
+    this.ModulessData.forEach((x, index) => {
       const array = this.form.at(index) as FormArray
       x.permission.forEach(c => {
         array.push(new FormControl(c.selected))
@@ -64,30 +81,37 @@ export class EditComponent implements OnInit {
 
   submit(form) {
     this.submitted = true;
-    if (form.valid) {
+    if (form.valid && this.name) {
       form.value.forEach((x, i) => {
         x.forEach((c, j) => {
           this.ModulessData[i].permission[j].selected = c;
         })
       })
-      console.log(this.ModulessData,this.name)
-   
+      if(this.edit){
+        this.service.update(this.id,{ name: this.name, acl: this.ModulessData }).subscribe((data: any) => {
+          this.router.navigate(['/role/list']);
+        });
+      }else{
+        this.service.create({ name: this.name, acl: this.ModulessData }).subscribe((data: any) => {
+          this.router.navigate(['/role/list']);
+        });
+      }
     }
   }
+
   // customValidator() {
   //   return (formArray: FormArray) => {
   //     return formArray.value.filter(x => x).length > 0 ? null : { error: "at leat one" }
   //   }
   // }
-  customValidatorOverAll(min)
-  {
+  customValidatorOverAll(min) {
     return (formArray: FormArray) => {
-      let count=0;
+      let count = 0;
 
-      formArray.value.forEach(x=>{
-         count+=x?x.filter(c=>c).length:0;
+      formArray.value.forEach(x => {
+        count += x ? x.filter(c => c).length : 0;
       })
-      return count>=min?null:{error:"At least select "+min}
+      return count >= min ? null : { error: "At least select " + min }
     }
   }
 
