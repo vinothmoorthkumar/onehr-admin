@@ -1,0 +1,32 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    Roles Add
+                </div>
+                <!-- card-body start -->
+                <div class="card-body">
+                    <input type="text" class="form-control" [(ngModel)] ="name" placeholder="Enter the Name of Role" required>
+                    <div class="invalid-feedback" *ngIf="submitted && !name"> Name is required </div>
+                    <form [formGroup]="form" (ngSubmit)="submit(form)">
+                        <br />
+                        <table class="table">
+                            <tbody>
+                                <tr *ngFor="let array of form.controls; let i=index;">
+                                    <td class="text-center">{{ModulessData[i].name}}</td>
+                                    <td class="text-center" *ngFor="let control of array.controls; index as j;">
+                                        <span class="checklistLabel">{{ModulessData[i].permission[j].key}}</span>
+                                        <input style='vertical-align: middle;' [formControl]="control" type="checkbox">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button class="btn btn-primary float-right" type="submit">Submit</button>
+                    </form>
+                    <div class="invalid-feedback" *ngIf="submitted && form?.errors">Select atleast One </div>
+                </div>
+                <!-- card-body end -->
+            </div>
+        </div>
+    </div>

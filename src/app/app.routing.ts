@@ -51,6 +51,10 @@ export const routes: Routes = [
       {
         path: 'pages',
         loadChildren: () => import('./views/pages/pages.module').then(m => m.PagesModule)
+      },
+      {
+        path: 'role',
+        loadChildren: () => import('./views/roles/roles.module').then(m => m.RolesModule)
       }
     ]
   },

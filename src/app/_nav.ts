@@ -8,6 +8,11 @@ export const navItems: INavData[] = [
     icon: 'fa fa-user-circle fa-lg'
   },
   {
+    name: 'Role',
+    url: '/role/list',
+    icon: 'fa fa-drivers-license-o',
+  },
+  {
     name: 'Pages',
     url: '/pages',
     icon: 'fa fa-newspaper-o fa-lg',

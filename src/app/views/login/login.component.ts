@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
   password: string;
   loginForm: FormGroup;
   submitted = false;
+  error=false;
 
   constructor(
     private router: Router,
@@ -44,6 +45,8 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/user']);
         },
         error => {
+          console.log('error',error)
+          this.error=true;
           // this.alertService.error(error);
           // this.loading = false;
         });
