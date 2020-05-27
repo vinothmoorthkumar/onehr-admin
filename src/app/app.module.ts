@@ -9,6 +9,7 @@ import {RoleResolverService} from './views/roles/edit/edit.resolve';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -59,7 +60,8 @@ import { ChartsModule } from 'ng2-charts';
     ChartsModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatPaginatorModule
   ],
   declarations: [
     AppComponent,

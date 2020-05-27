@@ -1,6 +1,6 @@
 {
   "name": "onehr",
-  "version": "1",
+  "version": "1.0.0",
   "scripts": {
     "ng": "ng",
     "postinstall": "ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points",
@@ -13,10 +13,12 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^9.1.1",
+    "@angular/cdk": "^9.2.4",
     "@angular/common": "^9.1.1",
     "@angular/compiler": "^9.1.1",
     "@angular/core": "^9.1.1",
     "@angular/forms": "^9.1.1",
+    "@angular/material": "^9.2.4",
     "@angular/platform-browser": "^9.1.1",
     "@angular/platform-browser-dynamic": "^9.1.1",
     "@angular/router": "^9.1.1",

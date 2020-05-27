@@ -1,48 +1,55 @@
 <div class="animated fadeIn">
-    <div class="row">
-      <div class="col-lg-12">
-        <div class="card">
-          <div class="card-header">
-             Roles List
-            <button class="btn btn-primary float-right" routerLink="/role/add" type="button">Add New</button>
-          </div>
-          <div class="card-body">
-            <table class="table">
-              <thead>
-                <tr class="row">
-                  <th class="col-10">Name</th>
-                  <th class="col-2">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr class="row" *ngFor="let role of rolesList; index as i">
-                  <td class="col-10">{{role.name}}</td>
-                  <td class="col-2">
-                    <button class="btn btn-primary btn-pill btn-sm" [routerLink]="['/role/edit', role._id]"
-                    ><i class="fa fa-pencil"></i></button>
-                    <!-- <button class="btn btn-sm btn-pill btn-danger" (click)="delete(role._id)"><i class="fa fa-trash"></i></button> -->
-                    <button class="btn btn-sm btn-pill btn-danger" (click)="[myModal.show(),setDeleteId(role._id)]"><i class="fa fa-trash"></i></button>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          Roles List
+          <button class="btn btn-primary float-right" routerLink="/role/add" type="button">Add New</button>
+        </div>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr class="row">
+                <th class="col-10">Name</th>
+                <th class="col-2">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="row" *ngFor="let role of rolesList; index as i">
+                <td class="col-10">{{role.name}}</td>
+                <td class="col-2">
+                  <button class="btn btn-primary btn-pill btn-sm" [routerLink]="['/role/edit', role._id]"><i
+                      class="fa fa-pencil"></i></button>
+                  <!-- <button class="btn btn-sm btn-pill btn-danger" (click)="delete(role._id)"><i class="fa fa-trash"></i></button> -->
+                  <button class="btn btn-sm btn-pill btn-danger" (click)="[myModal.show(),setDeleteId(role._id)]"><i
+                      class="fa fa-trash"></i></button>
 
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <ul class="pagination">
-              <li class="page-item"><a class="page-link" href="#">Prev</a></li>
-              <li class="page-item active">
-                <a class="page-link" href="#">1</a>
-              </li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item"><a class="page-link" href="#">4</a></li>
-              <li class="page-item"><a class="page-link" href="#">Next</a></li>
-            </ul>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="#">Prev</a></li>
+            <li class="page-item active">
+              <a class="page-link" href="#">1</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">4</a></li>
+            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+          </ul> -->
+          <div>
+            <mat-paginator [length]="length" [pageSize]="pageSize"
+            (page)="pageEvent = $event" (click)="changepage()">
+            </mat-paginator>
           </div>
         </div>
       </div>
+    </div>
   </div>
 
-  <div bsModal #myModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div bsModal #myModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -61,6 +68,3 @@
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
-
-
-  

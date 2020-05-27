@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient , HttpParams} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +16,12 @@ export class RolesService {
       }));
   }
 
-  get() {
-    return this.http.get<any>(`/api/role`)
+  get(page) {
+    console.log('page',page)
+    let params = new HttpParams();
+    params = params.append('skip', page.skip);
+    params = params.append('limit', page.perPage);
+    return this.http.get<any>(`/api/role`, {params: params})
       .pipe(map(data => {
         return data;
       }));
