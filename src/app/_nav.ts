@@ -4,7 +4,7 @@ export const navItems: INavData[] = [
 
   {
     name: 'Users',
-    url: '/user',
+    url: '/user/list',
     icon: 'fa fa-user-circle fa-lg'
   },
   {

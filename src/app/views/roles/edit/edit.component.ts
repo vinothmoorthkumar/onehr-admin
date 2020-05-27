@@ -59,15 +59,12 @@ export class EditComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params.id;
-
-
     if (this.id) {
       this.edit = true;
       this.route.data.subscribe((response) => {
         this.editObj = response.role.data;
         this.name = this.editObj.name;
         this.ModulessData = this.editObj.acl;
-        console.log('data',response.role.data)
       });
     }
     this.form = new FormArray(this.ModulessData.map(x => new FormArray([])), this.customValidatorOverAll(1));

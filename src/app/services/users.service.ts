@@ -5,12 +5,14 @@ import { HttpClient , HttpParams} from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class RolesService {
+export class UsersService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { 
+    
+  }
 
   create(data) {
-    return this.http.post<any>(`/api/role`, data)
+    return this.http.post<any>(`/api/user`, data)
       .pipe(map(data => {
         return data;
       }));
@@ -20,30 +22,38 @@ export class RolesService {
     let params = new HttpParams();
     params = params.append('skip', page.skip);
     params = params.append('limit', page.perPage);
-    return this.http.get<any>(`/api/role`, {params: params})
+    return this.http.get<any>(`/api/user`, {params: params})
+      .pipe(map(data => {
+        return data;
+      }));
+  }
+
+  getRoles() {
+    return this.http.get<any>(`/api/role`)
       .pipe(map(data => {
         return data;
       }));
   }
 
   getByid(id) {
-    return this.http.get<any>(`/api/role/${id}`)
+    return this.http.get<any>(`/api/user/${id}`)
       .pipe(map(data => {
         return data;
       }));
   }
 
   update(id,data) {
-    return this.http.put<any>(`/api/role/${id}`,data)
+    return this.http.put<any>(`/api/user/${id}`,data)
       .pipe(map(data => {
         return data;
       }));
   }
 
   delete(id) {
-    return this.http.delete<any>(`/api/role/${id}`)
+    return this.http.delete<any>(`/api/user/${id}`)
       .pipe(map(data => {
         return data;
       }));
   }
+
 }
