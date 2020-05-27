@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UsersService } from '../../../services';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-edit',
@@ -15,6 +16,7 @@ export class EditComponent implements OnInit {
   edit = false;
   id: any;
   constructor(private formBuilder: FormBuilder,
+    private toastr: ToastrService,
     private router: Router, private route: ActivatedRoute,
     public service: UsersService) { }
 
@@ -73,6 +75,7 @@ export class EditComponent implements OnInit {
       this.service.create(this.Form.value).subscribe((data: any[]) => {
         this.router.navigate(['/user/list']);
       }, error => {
+        this.toastr.error('Username Already Exist','Error');
       });
     }
   }
