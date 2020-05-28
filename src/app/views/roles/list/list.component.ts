@@ -16,6 +16,11 @@ export class ListComponent implements OnInit {
 
   length = 0;
   pageSize = 10;
+  sort = {
+    col: 'name',
+    order: true
+  }
+  search = '';
 
   pageEvent: PageEvent;
 
@@ -28,7 +33,8 @@ export class ListComponent implements OnInit {
     if(this.pageEvent && this.pageEvent.pageIndex){
       index= this.pageEvent.pageIndex * this.pageSize;
     }
-    this.service.get({skip:index,perPage:this.pageSize}).subscribe((response: any) => {
+    let obj = { skip: index, perPage: this.pageSize, sort: this.sort, search: this.search };
+    this.service.get(obj).subscribe((response: any) => {
       if(response.data && response.data.result){
         this.rolesList=response.data.result;
         this.length = response.data.total;
@@ -37,7 +43,6 @@ export class ListComponent implements OnInit {
   }
 
   changepage(){
-    console.log('test',this.pageEvent)
     this.fetchData()
   }
 
@@ -50,5 +55,13 @@ export class ListComponent implements OnInit {
 
   setDeleteId(id){
     this.deleteItem=id;
+  }
+
+  sortTable(type) {
+    if (this.sort.col == type) {
+      this.sort.order = !this.sort.order;
+    }
+    this.sort.col = type;
+    this.fetchData();
   }
 }

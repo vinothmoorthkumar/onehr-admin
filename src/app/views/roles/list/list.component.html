@@ -3,14 +3,28 @@
     <div class="col-lg-12">
       <div class="card">
         <div class="card-header">
-          <span class="table_title">Roles</span>
-          <button class="btn btn-primary float-right" routerLink="/role/add" type="button">Add New</button>
+
+          <div class="row">
+            <span class="table_title col-sm-7">Role</span>
+            <div class="input-group col-sm-3">
+              <div class="input-group-append">
+                <span class="input-group-text"><i class="fa fa-search"></i></span>
+              </div>
+              <input type="text" id="username2" name="search" class="form-control" [(ngModel)]="search" (ngModelChange)="fetchData()"   placeholder="Search by name">
+            </div>
+            <span class="col-sm-2">
+              <button class="btn btn-primary" routerLink="/role/add" type="button">Add New</button>
+            </span>
+          </div>
         </div>
         <div class="card-body">
           <table class="table">
             <thead>
               <tr class="row">
-                <th class="col-10">Name</th>
+                <th class="col-10 pointer" (click)="sortTable('name')">Name
+                  <i class="fa fa-long-arrow-up" *ngIf="sort.col=='name' && sort.order"></i>
+                  <i class="fa fa-long-arrow-down" *ngIf="sort.col=='name' && !sort.order"></i>
+                </th>
                 <th class="col-2">Action</th>
               </tr>
             </thead>
@@ -20,7 +34,6 @@
                 <td class="col-2">
                   <button class="btn btn-primary btn-pill btn-sm" [routerLink]="['/role/edit', role._id]"><i
                       class="fa fa-pencil"></i></button>
-                  <!-- <button class="btn btn-sm btn-pill btn-danger" (click)="delete(role._id)"><i class="fa fa-trash"></i></button> -->
                   <button class="btn btn-sm btn-pill btn-danger" (click)="[myModal.show(),setDeleteId(role._id)]"><i
                       class="fa fa-trash"></i></button>
 
