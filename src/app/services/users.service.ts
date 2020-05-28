@@ -19,9 +19,15 @@ export class UsersService {
   }
 
   get(page) {
+    console.log('page',page)
     let params = new HttpParams();
     params = params.append('skip', page.skip);
     params = params.append('limit', page.perPage);
+    params = params.append('sortby', page.sort.col);
+    params = params.append('order', page.sort.order);
+    if(page.search != ""){
+      params = params.append('search', page.search);
+    }
     return this.http.get<any>(`/api/user`, {params: params})
       .pipe(map(data => {
         return data;
