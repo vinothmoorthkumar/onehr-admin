@@ -13,7 +13,7 @@
               <input type="text" id="username2" name="search" class="form-control" [(ngModel)]="search" (ngModelChange)="fetchData()"   placeholder="Search by name">
             </div>
             <span class="col-sm-2">
-              <button class="btn btn-primary" routerLink="/role/add" type="button">Add New</button>
+              <button class="btn btn-primary" routerLink="/role/add" type="button" *ngIf="Isauth('add')">Add New</button>
             </span>
           </div>
         </div>
@@ -32,9 +32,9 @@
               <tr class="row" *ngFor="let role of rolesList; index as i">
                 <td class="col-10">{{role.name}}</td>
                 <td class="col-2">
-                  <button class="btn btn-primary btn-pill btn-sm" [routerLink]="['/role/edit', role._id]"><i
+                  <button *ngIf="Isauth('update')" class="btn btn-primary btn-pill btn-sm" [routerLink]="['/role/edit', role._id]"><i
                       class="fa fa-pencil"></i></button>
-                  <button class="btn btn-sm btn-pill btn-danger" (click)="[myModal.show(),setDeleteId(role._id)]"><i
+                  <button *ngIf="Isauth('delete')" class="btn btn-sm btn-pill btn-danger" (click)="[myModal.show(),setDeleteId(role._id)]"><i
                       class="fa fa-trash"></i></button>
 
                 </td>

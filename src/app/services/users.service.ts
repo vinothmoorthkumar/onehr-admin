@@ -19,7 +19,6 @@ export class UsersService {
   }
 
   get(page) {
-    console.log('page',page)
     let params = new HttpParams();
     params = params.append('skip', page.skip);
     params = params.append('limit', page.perPage);

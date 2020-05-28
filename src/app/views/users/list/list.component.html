@@ -11,8 +11,8 @@
               </div>
               <input type="text" id="username2" name="search" class="form-control" [(ngModel)]="search" (ngModelChange)="fetchData()"   placeholder="Search by username">
             </div>
-            <span class="col-sm-2">
-              <button class="btn btn-primary" routerLink="/user/add" type="button">Add New</button>
+            <span class="col-sm-2" *ngIf="Isauth('add')">
+              <button class="btn btn-primary"  routerLink="/user/add" type="button">Add New</button>
             </span>
           </div>
         </div>
@@ -41,11 +41,10 @@
                 <td class="col-3">{{users.username}}</td>
                 <td class="col-3">{{users.email}}</td>
                 <td class="col-2">
-                  <button class="btn btn-primary btn-pill btn-sm" [routerLink]="['/user/edit', users._id]"><i
+                  <button class="btn btn-primary btn-pill btn-sm" *ngIf="Isauth('update')" [routerLink]="['/user/edit', users._id]"><i
                       class="fa fa-pencil"></i></button>
-                  <button class="btn btn-sm btn-pill btn-danger" (click)="[myModal.show(),setDeleteId(users._id)]"><i
+                  <button class="btn btn-sm btn-pill btn-danger" *ngIf="Isauth('delete')" (click)="[myModal.show(),setDeleteId(users._id)]"><i
                       class="fa fa-trash"></i></button>
-
                 </td>
               </tr>
             </tbody>

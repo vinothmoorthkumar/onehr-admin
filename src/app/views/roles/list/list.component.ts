@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { RolesService } from '../../../services';
+import { RolesService, AuthorizationService } from '../../../services';
 import {ModalDirective} from 'ngx-bootstrap/modal';
 import {PageEvent} from '@angular/material/paginator';
 
@@ -11,7 +11,7 @@ import {PageEvent} from '@angular/material/paginator';
 export class ListComponent implements OnInit {
   @ViewChild('myModal') public myModal: ModalDirective;
   deleteItem
-  constructor(private service: RolesService) { }
+  constructor(private service: RolesService, private auth: AuthorizationService) { }
   rolesList:[];
 
   length = 0;
@@ -26,6 +26,10 @@ export class ListComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchData();
+  }
+
+  Isauth(access){
+    return this.auth.IsAuth('users',access);
   }
 
   fetchData(){

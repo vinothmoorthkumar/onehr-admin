@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { UsersService } from '../../../services';
+import { UsersService ,AuthorizationService} from '../../../services';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { PageEvent } from '@angular/material/paginator';
 
@@ -11,7 +11,7 @@ import { PageEvent } from '@angular/material/paginator';
 export class ListComponent implements OnInit {
   @ViewChild('myModal') public myModal: ModalDirective;
   deleteItem
-  constructor(private service: UsersService) { }
+  constructor(private service: UsersService, private auth: AuthorizationService) { }
   usersList: [];
 
   length = 0;
@@ -27,6 +27,9 @@ export class ListComponent implements OnInit {
     this.fetchData();
   }
 
+  Isauth(access){
+    return this.auth.IsAuth('users',access);
+  }
   fetchData() {
     let index = 0
     if (this.pageEvent && this.pageEvent.pageIndex) {
