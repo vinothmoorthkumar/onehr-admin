@@ -30,8 +30,8 @@ export const navItems: any = [
         url: '/pages/home',
       },
       {
-        name: 'About',
-        url: '/buttons/dropdowns',
+        name: 'About Us',
+        url: '/pages/about',
       },
       {
         name: 'Service',

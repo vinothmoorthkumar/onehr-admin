@@ -7,6 +7,7 @@ import { HomeComponent } from './home/home.component';
 
 // Components Routing
 import { PagesRoutingModule } from './pages-routing.module';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { PagesRoutingModule } from './pages-routing.module';
     PagesRoutingModule,
   ],
   declarations: [
-    HomeComponent
+    HomeComponent,
+    AboutComponent
   ]
 })
 export class PagesModule { }
