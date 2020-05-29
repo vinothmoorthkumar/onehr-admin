@@ -1,15 +1,23 @@
 import { INavData } from '@coreui/angular';
 
-export const navItems: INavData[] = [
+export const navItems: any = [
 
   {
     name: 'Users',
     url: '/user/list',
+    acl: {
+      module: 'users',
+      permission:'view'
+    },
     icon: 'fa fa-user-circle fa-lg'
   },
   {
     name: 'Role',
     url: '/role/list',
+    acl: {
+      module: 'roles',
+      permission:['view']
+    },
     icon: 'fa fa-drivers-license-o',
   },
   {
