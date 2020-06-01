@@ -1,10 +1,32 @@
 <div class="animated fadeIn">
-    <div class="card">
-      <div class="card-header">
-        <strong>About Us</strong>
-      </div>
-      <angular-editor [placeholder]="'Enter text here...'" [(ngModel)]="html"></angular-editor>
-      <button (click)="publish()">test</button>
+  <div class="card">
+    <div class="card-header">
+      <strong>About Us</strong>
+      <span class="float-right">
+        <button class="btn btn-primary" (click)="publish()">Publish</button>
+      </span>
     </div>
+    <div cdkDropList class="example-list p-3" (cdkDropListDropped)="drop($event)">
+
+      <div class="animated fadeIn">
+        <div *ngFor="let section of sections; let i = index" cdkDrag class="card">
+          <div class="card-header">
+            Section {{i+1}}
+            <div class="card-header-actions">
+              <button type="button" class="btn btn-primary" (click)="section.collapse = !section.collapse">
+                <i class="fa fa-compress fa-lg"></i>
+              </button>
+            </div>
+          </div>
+          <div class="card-body"
+               (collapsed)="collapsed($event)"
+               (expanded)="expanded($event)"
+               [collapse]="!section.collapse">
+               <angular-editor [placeholder]="'Enter text here...'" [(ngModel)]="html"></angular-editor>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
-  
+</div>
