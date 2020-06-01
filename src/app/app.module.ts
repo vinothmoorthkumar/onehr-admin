@@ -7,12 +7,14 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor, ErrorInterceptor } from './helpers';
 import { RoleResolverService } from './views/roles/edit/edit.resolve';
 import { UserResolverService } from './views/users/edit/edit.resolve';
+import { PagesResolverService } from './views/pages/pages.resolve';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { ToastrModule } from 'ngx-toastr';
 import {AuthorizationService} from './services';
+
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
 };
@@ -64,7 +66,7 @@ import { ChartsModule } from 'ng2-charts';
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    MatPaginatorModule
+    MatPaginatorModule,
   ],
   declarations: [
     AppComponent,
@@ -77,6 +79,7 @@ import { ChartsModule } from 'ng2-charts';
     RoleResolverService,
     UserResolverService,
     AuthorizationService,
+    PagesResolverService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
 

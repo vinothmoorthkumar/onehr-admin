@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
-
+import {PagesResolverService} from './pages.resolve';
 const routes: Routes = [
   {
     path: '',
@@ -27,7 +27,8 @@ const routes: Routes = [
         component: AboutComponent,
         data: {
           title: 'About'
-        }
+        },
+        resolve: { page: PagesResolverService }
       }
     ]
   }
