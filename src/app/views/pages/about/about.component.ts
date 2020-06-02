@@ -51,9 +51,17 @@ export class AboutComponent implements OnInit {
 
   publish() {
     let obj = { name: 'About Us', html: this.sections };
-    this.service.update('about_us', obj).subscribe((response: any) => {
-      this.toastr.success('Updated Successfully', 'Success');
-    });
+    let checkForm=this.sections.find(ele=>{
+      return ele.name=="" || ele.html==""
+    })
+    if(!checkForm){
+      this.service.update('about_us', obj).subscribe((response: any) => {
+        this.toastr.success('Updated Successfully', 'Success');
+      });
+    }else{
+      this.toastr.error('Name and content is mandatory', 'Error');
+    }
+   
   }
 
 }
