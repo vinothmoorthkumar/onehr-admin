@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { PageService } from '../../../services';
 import { ActivatedRoute } from '@angular/router';
-import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-about',
@@ -10,24 +11,12 @@ import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 })
 export class AboutComponent implements OnInit {
   html: string;
-  sections = [
-    {
-      name:'sec 1',
-      html:"test",
-    },
-    {
-      name:'sec 2',
-      html:"test"
-    },
-    {
-      name:'sec 3',
-      html:"test"
-    }
-  ];
-  constructor(private service: PageService, private route: ActivatedRoute, ) { }
+  sections = [];
+
+  constructor(private service: PageService, private route: ActivatedRoute, private toastr: ToastrService) { }
   ngOnInit(): void {
     this.route.data.subscribe((response) => {
-      this.html = response.page.data.html;
+      this.sections = response.page.data.html;
     })
   }
 
@@ -43,10 +32,21 @@ export class AboutComponent implements OnInit {
     // console.log(event);
   }
 
+  addsec(){
+    this.sections.push({
+      name:'new section',
+      html:'<h1> New section</h1>'
+    })
+  }
+
+  deletesec(index){
+    this.sections.splice(index, 1);
+  }
+
   publish() {
-    let obj = { name: 'About Us', html: this.html};
+    let obj = { name: 'About Us', html: this.sections };
     this.service.update('about_us', obj).subscribe((response: any) => {
-      console.log('test');
+      this.toastr.success('Updated Successfully', 'Success');
     });
   }
 
