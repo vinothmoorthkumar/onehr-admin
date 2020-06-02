@@ -16,7 +16,7 @@ export const navItems: any = [
     url: '/role/list',
     acl: {
       module: 'roles',
-      permission:['view']
+      permission:'view'
     },
     icon: 'fa fa-drivers-license-o',
   },
@@ -24,6 +24,10 @@ export const navItems: any = [
     name: 'Pages',
     url: '/pages',
     icon: 'fa fa-newspaper-o fa-lg',
+    acl: {
+      module: 'pages',
+      permission:'view'
+    },
     children: [
       {
         name: 'Home',

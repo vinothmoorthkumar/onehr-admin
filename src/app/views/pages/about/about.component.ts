@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PageService } from '../../../services';
+import { PageService, AuthorizationService } from '../../../services';
 import { ActivatedRoute } from '@angular/router';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ToastrService } from 'ngx-toastr';
@@ -13,7 +13,9 @@ export class AboutComponent implements OnInit {
   html: string;
   sections = [];
 
-  constructor(private service: PageService, private route: ActivatedRoute, private toastr: ToastrService) { }
+  constructor(private service: PageService, private route: ActivatedRoute, 
+    private auth: AuthorizationService,
+    private toastr: ToastrService) { }
   ngOnInit(): void {
     this.route.data.subscribe((response) => {
       this.sections = response.page.data.html;
@@ -30,6 +32,10 @@ export class AboutComponent implements OnInit {
 
   expanded(event: any): void {
     // console.log(event);
+  }
+
+  Isauth(access){
+    return this.auth.IsAuth('users',access);
   }
 
   addsec(){

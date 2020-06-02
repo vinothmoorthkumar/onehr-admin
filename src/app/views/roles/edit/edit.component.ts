@@ -44,7 +44,6 @@ export class EditComponent implements OnInit {
         { key: 'add', selected: false },
         { key: 'update', selected: false },
         { key: 'delete', selected: false },
-        { key: 'publish', selected: false }
       ]
     }
   ];

@@ -4,11 +4,16 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import {PagesResolverService} from './pages.resolve';
+import { AuthorizationGuard } from '../../helpers';
+
 const routes: Routes = [
   {
     path: '',
+    canActivate: [AuthorizationGuard],
     data: {
-      title: 'Pages'
+      title: 'Pages',
+      module: 'pages',
+      permission: ['view']
     },
     children: [
       {
