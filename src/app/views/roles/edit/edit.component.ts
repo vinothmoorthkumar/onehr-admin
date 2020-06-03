@@ -45,6 +45,16 @@ export class EditComponent implements OnInit {
         { key: 'update', selected: false },
         { key: 'delete', selected: false },
       ]
+    },
+    {
+      module: 'media',
+      name: 'Media',
+      permission: [
+        { key: 'view', selected: false },
+        { key: 'add', selected: false },
+        { key: 'update', selected: false },
+        { key: 'delete', selected: false },
+      ]
     }
   ];
 

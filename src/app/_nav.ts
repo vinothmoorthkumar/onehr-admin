@@ -65,5 +65,14 @@ export const navItems: any = [
       },
     ]
   },
+  {
+    name: 'Media',
+    url: '/media',
+    acl: {
+      module: 'media',
+      permission:'view'
+    },
+    icon: 'fa fa-cloud-upload',
+  },
 
 ];

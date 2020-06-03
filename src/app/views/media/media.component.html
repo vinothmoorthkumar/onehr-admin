@@ -1,0 +1,172 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <span class="table_title col-sm-7">Media</span>
+            <div class="input-group col-sm-3">
+              <div class="input-group-append">
+                <span class="input-group-text"><i class="fa fa-search"></i></span>
+              </div>
+              <input type="text" id="username2" name="search" class="form-control" [(ngModel)]="search"
+                (ngModelChange)="fetchData()" placeholder="Search by username">
+            </div>
+            <span class="col-sm-2" *ngIf="Isauth('add')">
+              <button class="btn btn-primary" (click)=uploadModal.show() type="button">Add New</button>
+            </span>
+          </div>
+        </div>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr class="row">
+                <th class="col-4 pointer" (click)="sortTable('name')">Name
+                  <i class="fa fa-long-arrow-up" *ngIf="sort.col=='name' && sort.order"></i>
+                  <i class="fa fa-long-arrow-down" *ngIf="sort.col=='name' && !sort.order"></i>
+                </th>
+                <th class="col-3 pointer" (click)="sortTable('username')">Username
+                  <i class="fa fa-long-arrow-up" *ngIf="sort.col=='username' && sort.order"></i>
+                  <i class="fa fa-long-arrow-down" *ngIf="sort.col=='username' && !sort.order"></i>
+                </th>
+                <th class="col-3 pointer" (click)="sortTable('email')">Email
+                  <i class="fa fa-long-arrow-up" *ngIf="sort.col=='email' && sort.order"></i>
+                  <i class="fa fa-long-arrow-down" *ngIf="sort.col=='email' && !sort.order"></i>
+                </th>
+                <th class="col-2">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="row" *ngFor="let users of usersList; index as i">
+                <td class="col-4">{{users.name}}</td>
+                <td class="col-3">{{users.username}}</td>
+                <td class="col-3">{{users.email}}</td>
+                <td class="col-2">
+                  <button class="btn btn-primary btn-pill btn-sm" *ngIf="Isauth('update')"
+                    [routerLink]="['/user/edit', users._id]"><i class="fa fa-pencil"></i></button>
+                  <button class="btn btn-sm btn-pill btn-danger" *ngIf="Isauth('delete')"
+                    (click)="[myModal.show(),setDeleteId(users._id)]"><i class="fa fa-trash"></i></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div>
+            <mat-paginator [length]="length" [pageSize]="pageSize" (page)="pageEvent = $event" (click)="changepage()">
+            </mat-paginator>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div bsModal #myModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Delete</h4>
+            <button type="button" class="close" (click)="myModal.hide()" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure you want to delete this item ?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="myModal.hide()">Cancel</button>
+            <button type="button" class="btn btn-primary" (click)="delete()">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+  <div bsModal #uploadModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Upload File</h4>
+          <button type="button" class="close" (click)="myModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div *ngIf="progress!=0" class="card">
+            <div class="card-header">
+              Please don't refresh or close tab.
+            </div>
+            <div class="card-body">
+              <progressbar class="progress progress-success" [value]="progress" [max]="100" type="success"><b>{{progress}}%</b></progressbar>
+            </div>
+          </div>
+          <form *ngIf="progress==0" [formGroup]="Form" class="form-horizontal">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="name-input">Name</label>
+              <div class="col-md-9">
+                <input type="text" formControlName="name" id="text-input" name="name" class="form-control"
+                  placeholder="Enter name">
+                <div class="invalid-feedback" *ngIf="submitted && f.name.errors && f.name.errors.required">
+                  Name is required
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="page">Page</label>
+              <div class="col-md-9">
+                <select id="page" formControlName="page" (change)="setPage($event.target.value)" name="page" class="form-control">
+                  <option [value]="page.key" *ngFor="let page of pages">{{page.name}}</option>
+                </select>
+                <div class="invalid-feedback" *ngIf="submitted && f.page.errors && f.page.errors.required">Page is
+                  required
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="selectedPage && selectedPage.length>0" class="form-group row">
+              <label class="col-md-3 col-form-label" >Section</label>
+              <div class="col-md-9 col-form-label">
+                <div class="form-check" *ngFor="let section of selectedPage; index as i">
+                  <input formControlName="section" class="form-check-input" type="radio" name="section" id={{section.key}} [value]="section.key" checked>
+                  <label class="form-check-label" for={{section.key}}>
+                    {{section.name}}
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="name-input">Link</label>
+              <div class="col-md-9">
+                <input type="text" formControlName="link" id="text-input" name="link" class="form-control"
+                  placeholder="Enter link">
+              </div>
+            </div>
+            
+            <div class="form-group row">
+              <label class="col-form-label btn btn-sm btn-primary chs-file"  for="file-upload">Choose File</label>
+              <div>
+                <input type="file" style="display:none" (change)="uploadFile($event)" id="file-upload" class="form-control" />
+                <div class="invalid-feedback" *ngIf="submitted && f.files.errors && f.files.errors.required">
+                  File is required
+                </div>
+              </div>
+            </div>
+            <div *ngIf="selectedFile && selectedFile.length>0">
+              <label class="col-form-label">
+                Selected Files
+              </label> 
+              <div *ngFor="let file of selectedFile" class="list-file">
+                {{file.name}}
+              </div>
+            </div>
+    
+          </form>
+        </div>
+        <div *ngIf="progress==0" class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="uploadModal.hide()">Close</button>
+          <button type="submit" class="btn btn-primary" (click)="submit()">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
