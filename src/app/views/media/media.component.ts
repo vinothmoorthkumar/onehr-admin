@@ -4,6 +4,7 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 import { PageEvent } from '@angular/material/paginator';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-media',
@@ -12,22 +13,28 @@ import { HttpEvent, HttpEventType } from '@angular/common/http';
 })
 export class MediaComponent implements OnInit {
   @ViewChild('myModal') public myModal: ModalDirective;
+  @ViewChild('uploadModal') public uploadModal: ModalDirective;
+  @ViewChild('mediaModal') public mediaModal: ModalDirective;
   Form: FormGroup;
   deleteItem
   constructor(private formBuilder: FormBuilder,
+    private toastr: ToastrService,
     private service: MediaService, private auth: AuthorizationService) { }
   mediaList: [];
-  selectedFile:any;
-  submitted=false;
+  selectedFile: any;
+  edit=false;
+  editId;
+  submitted = false;
   length = 0;
-  pageSize = 10;
+  pageSize = 5;
   sort = {
     col: 'name',
     order: true
   }
-  selectedPage:any;
+  selectedPage: any;
   search = '';
-  progress=0;
+  progress = 0;
+  fileSize = 'single';
   pages = [
     {
       name: 'Home',
@@ -35,8 +42,8 @@ export class MediaComponent implements OnInit {
       sections: [{
         name: "test1",
         key: "aboutUs_our_mandate"
-        }
-        ,{
+      }, 
+      {
         name: "test2",
         key: "aboutUs_our_partners"
       }]
@@ -46,11 +53,13 @@ export class MediaComponent implements OnInit {
       key: 'about-us',
       sections: [{
         name: "Our mandate",
-        key: "aboutUs_our_mandate"
-        }
-        ,{
+        key: "aboutUs_our_mandate",
+        file: "single"
+      }, 
+      {
         name: "Our Partners",
-        key: "aboutUs_our_partners"
+        key: "aboutUs_our_partners",
+        file: "multiple"
       }]
     },
     {
@@ -58,7 +67,7 @@ export class MediaComponent implements OnInit {
       key: 'job-classification'
     }
   ]
-
+  viewMedia= "";
   pageEvent: PageEvent;
 
   ngOnInit(): void {
@@ -67,7 +76,7 @@ export class MediaComponent implements OnInit {
       page: ['', Validators.required],
       section: ['', Validators.required],
       link: [''],
-      files: ['',Validators.required]
+      files: ['', Validators.required]
     };
     this.Form = this.formBuilder.group(form);
 
@@ -79,28 +88,42 @@ export class MediaComponent implements OnInit {
   }
 
   fetchData() {
-    // let index = 0
-    // if (this.pageEvent && this.pageEvent.pageIndex) {
-    //   index = this.pageEvent.pageIndex * this.pageSize;
-    // }
-    // let obj = { skip: index, perPage: this.pageSize, sort: this.sort, search: this.search };
-    // this.service.get(obj).subscribe((response: any) => {
-    //   if (response.data && response.data.result) {
-    //     this.mediaList = response.data.result;
-    //     this.length = response.data.total;
-    //   }
-    // });
+    let index = 0
+    if (this.pageEvent && this.pageEvent.pageIndex) {
+      index = this.pageEvent.pageIndex * this.pageSize;
+    }
+    let obj = { skip: index, perPage: this.pageSize, sort: this.sort, search: this.search };
+    this.service.get(obj).subscribe((response: any) => {
+      if (response.data && response.data.result) {
+        this.mediaList = response.data.result;
+        this.length = response.data.total;
+      }
+    });
+  }
+
+  changeSection(sec){
+    this.fileSize=sec.file;
   }
 
   changepage() {
     this.fetchData()
   }
 
+  getPage(page, index) {
+    let checkPage = this.pages.find(ele => ele.key == page);
+    return checkPage.name;
+  }
+
+  getsection(page, section) {
+    let checkPage = this.pages.find(ele => ele.key == page);
+    return checkPage.sections.find(ele => ele.key == section).name;
+  }
+
   delete() {
-    // this.service.delete(this.deleteItem).subscribe((data: any) => {
-    //   this.myModal.hide()
-    //   this.fetchData();
-    // });
+    this.service.delete(this.deleteItem).subscribe((data: any) => {
+      this.myModal.hide()
+      this.fetchData();
+    });
   }
 
   setDeleteId(id) {
@@ -116,8 +139,8 @@ export class MediaComponent implements OnInit {
   }
 
   setPage(page) {
-    this.selectedPage = this.pages.find(ele=>{
-      return ele.key==page
+    this.selectedPage = this.pages.find(ele => {
+      return ele.key == page
     }).sections;
   }
 
@@ -126,38 +149,113 @@ export class MediaComponent implements OnInit {
     this.Form.patchValue({
       files: file
     });
-    this.selectedFile=file;
-    console.log('test',this.selectedFile)
+    this.selectedFile = file;
     this.Form.get('files').updateValueAndValidity()
   }
 
   get f() { return this.Form.controls; }
 
-  submit(){
-    this.submitted=true;
-    console.log('this.Form.valu',this.Form.value)
+  submit() {
+    this.submitted = true;
     if (this.Form.invalid) {
       return;
     }
-    this.service.create(this.Form.value).subscribe((event: HttpEvent<any>) => {
-      console.log('eventtype',event)
-      switch (event.type) {
-        case HttpEventType.Sent:
-          console.log('Request has been made!');
-          break;
-        case HttpEventType.ResponseHeader:
-          console.log('Response header has been received!');
-          break;
-        case HttpEventType.UploadProgress:
-          this.progress = Math.round(event.loaded / event.total * 100);
-          console.log(`Uploaded! ${this.progress}%`);
-          break;
-        case HttpEventType.Response:
-          console.log('User successfully created!', event.body);
-          setTimeout(() => {
-            this.progress = 0;
-          }, 1500);
+
+    if(this.edit){
+      this.service.update(this.editId,this.Form.value).subscribe((event: HttpEvent<any>) => {
+        console.log('test',event)
+        switch (event.type) {
+          case HttpEventType.Sent:
+            console.log('Request has been made!');
+            break;
+          case HttpEventType.ResponseHeader:
+            console.log('Response header has been received!');
+            break;
+          case HttpEventType.UploadProgress:
+            this.progress = Math.round(event.loaded / event.total * 100);
+            console.log(`Uploaded! ${this.progress}%`);
+            break;
+          case HttpEventType.Response:
+            console.log('created successfully !', event.body);
+            this.closeUploadModal();
+            this.fetchData();
+            setTimeout(() => {
+              this.progress = 0;
+            }, 1500);
         }
-    })
+        this.Form.reset(this.Form.value);
+      }, error => {
+        this.progress = 0;
+        this.toastr.error('Something went wrong, Check file type', 'Error');
+      })
+    }else{
+      this.service.create(this.Form.value, this.fileSize).subscribe((event: HttpEvent<any>) => {
+        switch (event.type) {
+          case HttpEventType.Sent:
+            console.log('Request has been made!');
+            break;
+          case HttpEventType.ResponseHeader:
+            console.log('Response header has been received!');
+            break;
+          case HttpEventType.UploadProgress:
+            this.progress = Math.round(event.loaded / event.total * 100);
+            console.log(`Uploaded! ${this.progress}%`);
+            break;
+          case HttpEventType.Response:
+            console.log('created successfully !', event.body);
+            this.closeUploadModal();
+            this.fetchData();
+            setTimeout(() => {
+              this.progress = 0;
+            }, 1500);
+        }
+        this.Form.reset(this.Form.value);
+      }, error => {
+        this.progress = 0;
+        this.toastr.error('Something went wrong, Check file type', 'Error');
+      })
+    }
+   
+  }
+
+  resetForm() {
+    this.submitted = false;
+    this.selectedFile = [];
+    this.Form.reset();
+    this.selectedPage = [];
+  }
+  closeUploadModal() {
+    this.uploadModal.hide();
+    this.resetForm();
+  }
+  setViewMedia(path){
+    this.mediaModal.show();
+    this.viewMedia = path;
+  }
+
+  openUploadModel(id){
+    if(id){
+      this.edit=true;
+      this.editId=id;
+      this.Form.get('files').setValidators([]);
+      this.service.getByid(id).subscribe((response: any) => {
+        if (response.data && response.data) {
+
+          let data =response.data;
+          this.Form.setValue({
+            name: data.name || '',
+            page: data.page || '',
+            section: data.section || '',
+            link: data.link || '',
+            files: '',
+          });
+          this.selectedFile=[{name:data.fileOriginalName}]
+          this.uploadModal.show()
+        }
+      });
+    }else{
+      this.edit=false;
+      this.uploadModal.show()
+    }
   }
 }

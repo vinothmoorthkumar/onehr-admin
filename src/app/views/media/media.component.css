@@ -1,3 +1,8 @@
 .row {
     padding-bottom: 0px;
 }
+
+.media-img{
+    max-width: 37px;
+    max-height: 37px;
+}
