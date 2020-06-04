@@ -4,6 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ToastrService } from 'ngx-toastr';
 
+import * as _ from 'underscore';
+
 @Component({
   selector: 'app-about',
   templateUrl: './about.component.html',
@@ -12,12 +14,16 @@ import { ToastrService } from 'ngx-toastr';
 export class AboutComponent implements OnInit {
   html: string;
   sections = [];
-
+  mediaSections;
   constructor(private service: PageService, private route: ActivatedRoute, 
     private auth: AuthorizationService,
     private toastr: ToastrService) { }
   ngOnInit(): void {
     this.route.data.subscribe((response) => {
+      this.service.getMedia(response.slug).subscribe((media: any) => {
+        this.mediaSections=_.groupBy(media.data,'section')
+        console.log('test',this.mediaSections);
+      });
       this.sections = response.page.data.html;
     })
   }

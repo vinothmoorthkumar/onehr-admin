@@ -31,7 +31,8 @@ const routes: Routes = [
         path: 'about',
         component: AboutComponent,
         data: {
-          title: 'About'
+          title: 'About',
+          slug: 'about_us'
         },
         resolve: { page: PagesResolverService }
       }

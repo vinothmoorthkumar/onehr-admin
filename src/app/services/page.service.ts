@@ -16,6 +16,13 @@ export class PageService {
       }));
   }
 
+  getMedia(slug) {
+    return this.http.get<any>(`/api/site/media/${slug}`)
+      .pipe(map(data => {
+        return data;
+      }));
+  }
+
   update(slug,data) {
     return this.http.put<any>(`/api/page/${slug}`,data)
       .pipe(map(data => {

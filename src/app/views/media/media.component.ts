@@ -50,7 +50,7 @@ export class MediaComponent implements OnInit {
     },
     {
       name: 'About Us',
-      key: 'about-us',
+      key: 'about_us',
       sections: [{
         name: "Our mandate",
         key: "aboutUs_our_mandate",

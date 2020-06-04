@@ -10,6 +10,6 @@ export class PagesResolverService implements Resolve<any> {
   constructor(private apiService: PageService) {}
 
   resolve(route: ActivatedRouteSnapshot) {
-    return this.apiService.get('about_us');
+    return this.apiService.get(route.data.slug);
   }
 }
