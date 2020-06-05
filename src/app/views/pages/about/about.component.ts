@@ -3,7 +3,6 @@ import { PageService, AuthorizationService } from '../../../services';
 import { ActivatedRoute } from '@angular/router';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ToastrService } from 'ngx-toastr';
-
 import * as _ from 'underscore';
 
 @Component({
@@ -22,7 +21,6 @@ export class AboutComponent implements OnInit {
     this.route.data.subscribe((response) => {
       this.service.getMedia(response.slug).subscribe((media: any) => {
         this.mediaSections=_.groupBy(media.data,'section')
-        console.log('test',this.mediaSections);
       });
       this.sections = response.page.data.html;
     })

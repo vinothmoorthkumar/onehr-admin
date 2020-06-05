@@ -11,6 +11,7 @@ import { HomeComponent } from './home/home.component';
 import { PagesRoutingModule } from './pages-routing.module';
 import { AboutComponent } from './about/about.component';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 @NgModule({
   imports: [
@@ -20,6 +21,7 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
     AngularEditorModule,
     DragDropModule,
     CollapseModule.forRoot(),
+    TooltipModule.forRoot()
   ],
   declarations: [
     HomeComponent,

@@ -3,6 +3,10 @@
     <div class="card-header">
       <strong class="test">About Us</strong>
       <span class="float-right">
+        <button type="button" class="btn btn-primary"
+              tooltip="Short code: #aboutUs_our_mandate, #ourPartnerImg">
+              <i class="fa fa-info-circle"></i>
+      </button>
         <button class="btn btn-secondary" *ngIf="Isauth('add')" (click)="addsec()">Add new</button>
         <button class="btn btn-primary" *ngIf="Isauth('update')" (click)="publish()">Publish</button>
       </span>
