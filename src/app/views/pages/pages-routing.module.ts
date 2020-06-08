@@ -24,8 +24,10 @@ const routes: Routes = [
         path: 'home',
         component: HomeComponent,
         data: {
-          title: 'Home'
-        }
+          title: 'Home',
+          slug: 'home'
+        },
+        resolve: { page: PagesResolverService }
       },
       {
         path: 'about',

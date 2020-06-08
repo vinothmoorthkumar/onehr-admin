@@ -22,7 +22,7 @@ export class MediaComponent implements OnInit {
     private service: MediaService, private auth: AuthorizationService) { }
   mediaList: [];
   selectedFile: any;
-  edit=false;
+  edit = false;
   editId;
   submitted = false;
   length = 0;
@@ -35,20 +35,15 @@ export class MediaComponent implements OnInit {
   search = '';
   progress = 0;
   fileSize = 'single';
-  imageTypes=["image/jpeg","image/png","image/jpg"]
+  imageTypes = ["image/jpeg", "image/png", "image/jpg"]
   pages = [
     {
       name: 'Home',
       key: 'home',
       sections: [{
-        name: "test1",
-        key: "aboutUs_our_mandate",
-        allowFiles:[]
-      }, 
-      {
-        name: "test2",
-        key: "aboutUs_our_partners",
-        allowFiles:[]
+        name: "slider",
+        key: "home_slider",
+        allowFiles: this.imageTypes,
       }]
     },
     {
@@ -58,28 +53,28 @@ export class MediaComponent implements OnInit {
         name: "Our mandate",
         key: "aboutUs_our_mandate",
         file: "single",
-        allowFiles:this.imageTypes
-      }, 
+        allowFiles: this.imageTypes
+      },
       {
         name: "Our Partners",
         key: "aboutUs_our_partners",
         file: "multiple",
-        allowFiles:this.imageTypes
+        allowFiles: this.imageTypes,
       },
       {
         name: "Brochure",
         key: "aboutUs_Brochure",
         file: "single",
-        allowFiles:['application/pdf']
+        allowFiles: ['application/pdf']
       }
-    ]
+      ]
     },
     {
       name: 'Job Classification',
       key: 'job-classification'
     }
   ]
-  viewMedia= "";
+  viewMedia = "";
   pageEvent: PageEvent;
 
   ngOnInit(): void {
@@ -113,8 +108,8 @@ export class MediaComponent implements OnInit {
     });
   }
 
-  changeSection(sec){
-    this.fileSize=sec.file;
+  changeSection(sec) {
+    this.fileSize = sec.file;
   }
 
   changepage() {
@@ -167,7 +162,7 @@ export class MediaComponent implements OnInit {
 
   get f() { return this.Form.controls; }
 
-  progressStatus(event){
+  progressStatus(event) {
     switch (event.type) {
       case HttpEventType.Sent:
         console.log('Request has been made!');
@@ -196,22 +191,22 @@ export class MediaComponent implements OnInit {
     if (this.Form.invalid) {
       return;
     }
-    let getSection = this.getsection(this.Form.value.page,this.Form.value.section);
-    if(getSection && getSection.allowFiles && this.Form.value.files.length>0){
-      if(!getSection.allowFiles.includes(this.Form.value.files[0].type)){
+    let getSection = this.getsection(this.Form.value.page, this.Form.value.section);
+    if (getSection && getSection.allowFiles && this.Form.value.files.length > 0) {
+      if (!getSection.allowFiles.includes(this.Form.value.files[0].type)) {
         this.toastr.error(`Only following file types are allowed ${getSection.allowFiles}`, 'Error');
         return;
       }
     }
-   
-    if(this.edit){
-      this.service.update(this.editId,this.Form.value).subscribe((event: HttpEvent<any>) => {
-          this.progressStatus(event);
+
+    if (this.edit) {
+      this.service.update(this.editId, this.Form.value).subscribe((event: HttpEvent<any>) => {
+        this.progressStatus(event);
       }, error => {
         this.progress = 0;
         this.toastr.error('Something went wrong, Check file type', 'Error');
       })
-    }else{
+    } else {
       this.service.create(this.Form.value, this.fileSize).subscribe((event: HttpEvent<any>) => {
         this.progressStatus(event);
         // switch (event.type) {
@@ -239,7 +234,7 @@ export class MediaComponent implements OnInit {
         this.toastr.error('Something went wrong, Check file type', 'Error');
       })
     }
-   
+
   }
 
   resetForm() {
@@ -252,20 +247,20 @@ export class MediaComponent implements OnInit {
     this.uploadModal.hide();
     this.resetForm();
   }
-  setViewMedia(path){
+  setViewMedia(path) {
     this.mediaModal.show();
     this.viewMedia = path;
   }
 
-  openUploadModel(id){
-    if(id){
-      this.edit=true;
-      this.editId=id;
+  openUploadModel(id) {
+    if (id) {
+      this.edit = true;
+      this.editId = id;
       this.Form.get('files').setValidators([]);
       this.service.getByid(id).subscribe((response: any) => {
         if (response.data && response.data) {
 
-          let data =response.data;
+          let data = response.data;
           this.Form.setValue({
             name: data.name || '',
             page: data.page || '',
@@ -273,12 +268,12 @@ export class MediaComponent implements OnInit {
             link: data.link || '',
             files: '',
           });
-          this.selectedFile=[{name:data.fileOriginalName}]
+          this.selectedFile = [{ name: data.fileOriginalName }]
           this.uploadModal.show()
         }
       });
-    }else{
-      this.edit=false;
+    } else {
+      this.edit = false;
       this.uploadModal.show()
     }
   }
