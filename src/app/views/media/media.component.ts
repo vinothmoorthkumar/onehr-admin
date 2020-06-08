@@ -35,17 +35,20 @@ export class MediaComponent implements OnInit {
   search = '';
   progress = 0;
   fileSize = 'single';
+  imageTypes=["image/jpeg","image/png","image/jpg"]
   pages = [
     {
       name: 'Home',
       key: 'home',
       sections: [{
         name: "test1",
-        key: "aboutUs_our_mandate"
+        key: "aboutUs_our_mandate",
+        allowFiles:[]
       }, 
       {
         name: "test2",
-        key: "aboutUs_our_partners"
+        key: "aboutUs_our_partners",
+        allowFiles:[]
       }]
     },
     {
@@ -54,13 +57,22 @@ export class MediaComponent implements OnInit {
       sections: [{
         name: "Our mandate",
         key: "aboutUs_our_mandate",
-        file: "single"
+        file: "single",
+        allowFiles:this.imageTypes
       }, 
       {
         name: "Our Partners",
         key: "aboutUs_our_partners",
-        file: "multiple"
-      }]
+        file: "multiple",
+        allowFiles:this.imageTypes
+      },
+      {
+        name: "Brochure",
+        key: "aboutUs_Brochure",
+        file: "single",
+        allowFiles:['application/pdf']
+      }
+    ]
     },
     {
       name: 'Job Classification',
@@ -116,7 +128,7 @@ export class MediaComponent implements OnInit {
 
   getsection(page, section) {
     let checkPage = this.pages.find(ele => ele.key == page);
-    return checkPage.sections.find(ele => ele.key == section).name;
+    return checkPage.sections.find(ele => ele.key == section);
   }
 
   delete() {
@@ -155,61 +167,73 @@ export class MediaComponent implements OnInit {
 
   get f() { return this.Form.controls; }
 
+  progressStatus(event){
+    switch (event.type) {
+      case HttpEventType.Sent:
+        console.log('Request has been made!');
+        break;
+      case HttpEventType.ResponseHeader:
+        console.log('Response header has been received!');
+        break;
+      case HttpEventType.UploadProgress:
+        this.progress = Math.round(event.loaded / event.total * 100);
+        console.log(`Uploaded! ${this.progress}%`);
+        break;
+      case HttpEventType.Response:
+        console.log('created successfully !', event.body);
+        this.closeUploadModal();
+        this.fetchData();
+        setTimeout(() => {
+          this.progress = 0;
+        }, 1500);
+    }
+    this.Form.reset(this.Form.value);
+  }
+
+
   submit() {
     this.submitted = true;
     if (this.Form.invalid) {
       return;
     }
-
+    let getSection = this.getsection(this.Form.value.page,this.Form.value.section);
+    if(getSection && getSection.allowFiles && this.Form.value.files.length>0){
+      if(!getSection.allowFiles.includes(this.Form.value.files[0].type)){
+        this.toastr.error(`Only following file types are allowed ${getSection.allowFiles}`, 'Error');
+        return;
+      }
+    }
+   
     if(this.edit){
       this.service.update(this.editId,this.Form.value).subscribe((event: HttpEvent<any>) => {
-        console.log('test',event)
-        switch (event.type) {
-          case HttpEventType.Sent:
-            console.log('Request has been made!');
-            break;
-          case HttpEventType.ResponseHeader:
-            console.log('Response header has been received!');
-            break;
-          case HttpEventType.UploadProgress:
-            this.progress = Math.round(event.loaded / event.total * 100);
-            console.log(`Uploaded! ${this.progress}%`);
-            break;
-          case HttpEventType.Response:
-            console.log('created successfully !', event.body);
-            this.closeUploadModal();
-            this.fetchData();
-            setTimeout(() => {
-              this.progress = 0;
-            }, 1500);
-        }
-        this.Form.reset(this.Form.value);
+          this.progressStatus(event);
       }, error => {
         this.progress = 0;
         this.toastr.error('Something went wrong, Check file type', 'Error');
       })
     }else{
       this.service.create(this.Form.value, this.fileSize).subscribe((event: HttpEvent<any>) => {
-        switch (event.type) {
-          case HttpEventType.Sent:
-            console.log('Request has been made!');
-            break;
-          case HttpEventType.ResponseHeader:
-            console.log('Response header has been received!');
-            break;
-          case HttpEventType.UploadProgress:
-            this.progress = Math.round(event.loaded / event.total * 100);
-            console.log(`Uploaded! ${this.progress}%`);
-            break;
-          case HttpEventType.Response:
-            console.log('created successfully !', event.body);
-            this.closeUploadModal();
-            this.fetchData();
-            setTimeout(() => {
-              this.progress = 0;
-            }, 1500);
-        }
-        this.Form.reset(this.Form.value);
+        this.progressStatus(event);
+        // switch (event.type) {
+        //   case HttpEventType.Sent:
+        //     console.log('Request has been made!');
+        //     break;
+        //   case HttpEventType.ResponseHeader:
+        //     console.log('Response header has been received!');
+        //     break;
+        //   case HttpEventType.UploadProgress:
+        //     this.progress = Math.round(event.loaded / event.total * 100);
+        //     console.log(`Uploaded! ${this.progress}%`);
+        //     break;
+        //   case HttpEventType.Response:
+        //     console.log('created successfully !', event.body);
+        //     this.closeUploadModal();
+        //     this.fetchData();
+        //     setTimeout(() => {
+        //       this.progress = 0;
+        //     }, 1500);
+        // }
+        // this.Form.reset(this.Form.value);
       }, error => {
         this.progress = 0;
         this.toastr.error('Something went wrong, Check file type', 'Error');

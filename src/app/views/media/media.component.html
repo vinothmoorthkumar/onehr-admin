@@ -43,12 +43,12 @@
               <tr class="row" *ngFor="let media of mediaList; index as i">
                 <td class="col-2">{{media.name}}</td>
                 <td class="col-3">{{getPage(media.page,i)}}</td>
-                <td class="col-3">{{getsection(media.page,media.section)}}</td>
+                <td class="col-3">{{getsection(media.page,media.section).name}}</td>
                 <td class="col-2">{{media.fileType}}</td>
                 <td class="col-2">
                   <button class="btn btn-sm btn-pill btn-primary" *ngIf="Isauth('edit')"
                   (click)="openUploadModel(media._id)"><i class="fa fa-pencil"></i></button>
-                  <button class="btn btn-sm btn-pill btn-secondary" *ngIf="Isauth('view')"
+                  <button [disabled]="!this.imageTypes.includes(media.fileType)" class="btn btn-sm btn-pill btn-secondary" *ngIf="Isauth('view')"
                   (click)="setViewMedia(media.filePath)"><i class="fa fa-eye"></i></button>
                   <button class="btn btn-sm btn-pill btn-danger" *ngIf="Isauth('delete')"
                     (click)="[myModal.show(),setDeleteId(media._id)]"><i class="fa fa-trash"></i></button>
@@ -154,8 +154,8 @@
 
             <div class="form-group row">
               <label class="col-form-label btn btn-sm btn-primary chs-file" for="file-upload">Choose File</label>
-              <div>
-                <input type="file" style="display:none" accept="image/x-png,image/gif,image/jpeg"
+              <div style="width: 100%; text-align: center;">
+                <input type="file" style="display:none"
                   (change)="uploadFile($event)" id="file-upload" class="form-control" />
                 <div class="invalid-feedback" *ngIf="submitted && f.files.errors && f.files.errors.required">
                   File is required
