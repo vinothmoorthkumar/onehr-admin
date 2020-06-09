@@ -26,6 +26,7 @@ export class MediaService {
   }
 
   create(data, fileSize) {
+    console.log('data ser',data)
     var formData: any = new FormData();
     for(let i =0; i < data.files.length; i++){
       formData.append("files", data.files[i]);
@@ -36,6 +37,9 @@ export class MediaService {
     formData.append("section", data.section);
     if(data.link){
       formData.append("link", data.link);
+    }
+    if(data.extras){
+      formData.append("extras", JSON.stringify(data.extras));
     }
     return this.http.post<any>(`/api/media`, formData, {
       reportProgress: true, observe: 'events'
@@ -72,9 +76,9 @@ export class MediaService {
     if(data.link){
       formData.append("link", data.link);
     }
-    // , {
-    //   reportProgress: true, observe: 'events'
-    // }
+    if(data.extras){
+      formData.append("extras", JSON.stringify(data.extras));
+    }
     return this.http.post<any>(`/api/media/update/${id}`, formData, { observe: 'events', reportProgress: true})
       .pipe(map(data => {
         return data;

@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MediaService, AuthorizationService } from '../../services';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { PageEvent } from '@angular/material/paginator';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 
@@ -32,11 +32,12 @@ export class MediaComponent implements OnInit {
     order: true
   }
   selectedPage: any;
+  selectedSection: any;
   search = '';
   progress = 0;
   fileSize = 'single';
   imageTypes = ["image/jpeg", "image/png", "image/jpg"]
-  pages = [
+  pages: any = [
     {
       name: 'Home',
       key: 'home',
@@ -44,6 +45,21 @@ export class MediaComponent implements OnInit {
         name: "slider",
         key: "home_slider",
         allowFiles: this.imageTypes,
+        extras: [{ key: 'title', name: 'Title' }, { key: 'subtitle', name: 'SubTitle' }, { key: 'link', name: 'Link' }, { key: 'button', name: 'Button Content' }]
+      },
+      {
+        name: "Our Partners",
+        key: "home_our_partners",
+        file: "multiple",
+        allowFiles: this.imageTypes,
+        extras: [{ key: 'link', name: 'Link' }]
+      },
+      {
+        name: "Testimonial",
+        key: "home_testimonial",
+        file: "multiple",
+        allowFiles: this.imageTypes,
+        extras: [{ key: 'feedback', name: 'Feedback' },{ key: 'name', name: 'Name' },{ key: 'designation', name: 'Designation' },{ key: 'department', name: 'Department' }]
       }]
     },
     {
@@ -60,6 +76,7 @@ export class MediaComponent implements OnInit {
         key: "aboutUs_our_partners",
         file: "multiple",
         allowFiles: this.imageTypes,
+        extras: [{ key: 'link', name: 'Link' }]
       },
       {
         name: "Brochure",
@@ -82,8 +99,7 @@ export class MediaComponent implements OnInit {
       name: ['', Validators.required],
       page: ['', Validators.required],
       section: ['', Validators.required],
-      link: [''],
-      files: ['', Validators.required]
+      files: ['', Validators.required],
     };
     this.Form = this.formBuilder.group(form);
 
@@ -109,7 +125,23 @@ export class MediaComponent implements OnInit {
   }
 
   changeSection(sec) {
+    this.Form.removeControl('extras');
     this.fileSize = sec.file;
+    this.selectedSection = sec;
+    this.addExtrasInForm();
+  }
+
+  addExtrasInForm() {
+
+    if (this.selectedSection && this.selectedSection.extras) {
+
+      let obj = {};
+      this.selectedSection.extras.forEach(ele => {
+        obj[ele.key] = [''];
+      });
+
+      this.Form.addControl('extras', this.formBuilder.group(obj));
+    }
   }
 
   changepage() {
@@ -187,6 +219,7 @@ export class MediaComponent implements OnInit {
 
 
   submit() {
+    console.log('this.Form.value', this.Form.value)
     this.submitted = true;
     if (this.Form.invalid) {
       return;
@@ -209,26 +242,6 @@ export class MediaComponent implements OnInit {
     } else {
       this.service.create(this.Form.value, this.fileSize).subscribe((event: HttpEvent<any>) => {
         this.progressStatus(event);
-        // switch (event.type) {
-        //   case HttpEventType.Sent:
-        //     console.log('Request has been made!');
-        //     break;
-        //   case HttpEventType.ResponseHeader:
-        //     console.log('Response header has been received!');
-        //     break;
-        //   case HttpEventType.UploadProgress:
-        //     this.progress = Math.round(event.loaded / event.total * 100);
-        //     console.log(`Uploaded! ${this.progress}%`);
-        //     break;
-        //   case HttpEventType.Response:
-        //     console.log('created successfully !', event.body);
-        //     this.closeUploadModal();
-        //     this.fetchData();
-        //     setTimeout(() => {
-        //       this.progress = 0;
-        //     }, 1500);
-        // }
-        // this.Form.reset(this.Form.value);
       }, error => {
         this.progress = 0;
         this.toastr.error('Something went wrong, Check file type', 'Error');
@@ -238,9 +251,12 @@ export class MediaComponent implements OnInit {
   }
 
   resetForm() {
+    console.log('test reset')
     this.submitted = false;
     this.selectedFile = [];
+    this.selectedSection='';
     this.Form.reset();
+    this.Form.removeControl('extras');
     this.selectedPage = [];
   }
   closeUploadModal() {
@@ -259,22 +275,40 @@ export class MediaComponent implements OnInit {
       this.Form.get('files').setValidators([]);
       this.service.getByid(id).subscribe((response: any) => {
         if (response.data && response.data) {
-
           let data = response.data;
-          this.Form.setValue({
+          let obj = {
             name: data.name || '',
             page: data.page || '',
             section: data.section || '',
-            link: data.link || '',
             files: '',
-          });
+          }
+          let currentSection = this.getsection(data.page, data.section);
+          if (data.section != 'none') {
+            this.changeSection(currentSection);
+          }
+          if (currentSection && currentSection.extras) {
+            let extraObj = {}
+            currentSection.extras.forEach(element => {
+              extraObj[element.key] = data.extras && data.extras[element.key] ? data.extras[element.key] : '';
+            });
+            obj['extras'] = extraObj;
+
+          }
+
+          this.Form.setValue(obj);
           this.selectedFile = [{ name: data.fileOriginalName }]
           this.uploadModal.show()
         }
       });
     } else {
+      this.resetForm();
       this.edit = false;
       this.uploadModal.show()
     }
+  }
+
+  copied(){
+    this.toastr.success('File Path Copied Successfully');
+
   }
 }

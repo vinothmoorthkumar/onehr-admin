@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
+import {ClipboardModule} from '@angular/cdk/clipboard';
 
 @NgModule({
   declarations: [MediaComponent],
@@ -16,6 +17,7 @@ import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
     MatPaginatorModule,
     ReactiveFormsModule,
     MediaRoutingModule,
+    ClipboardModule,
     ProgressbarModule.forRoot(),
   ]
 })
