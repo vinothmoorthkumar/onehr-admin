@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ToastrService } from 'ngx-toastr';
 import * as _ from 'underscore';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
 
 @Component({
   selector: 'app-home',
@@ -13,6 +14,17 @@ import * as _ from 'underscore';
 export class HomeComponent implements OnInit {
   html: string;
   sections = [];
+  editorConfig: AngularEditorConfig = {
+    editable: true,
+    sanitize: false,
+    toolbarHiddenButtons: [
+      [
+        'insertImage',
+        'insertVideo',
+        'removeFormat'
+      ]
+    ]
+  };
   constructor(private service: PageService, private route: ActivatedRoute, 
     private auth: AuthorizationService,
     private toastr: ToastrService) { }

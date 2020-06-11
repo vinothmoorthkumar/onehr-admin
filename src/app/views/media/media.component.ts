@@ -36,7 +36,7 @@ export class MediaComponent implements OnInit {
   search = '';
   progress = 0;
   fileSize = 'single';
-  imageTypes = ["image/jpeg", "image/png", "image/jpg"]
+  imageTypes = ["image/jpeg", "image/png", "image/jpg","image/svg+xml"]
   pages: any = [
     {
       name: 'Home',

@@ -35,7 +35,7 @@
             <input type="text" class="form-control" [(ngModel)]="section.name" placeholder="Enter the Name of section"
               required>
             <br />
-            <angular-editor [placeholder]="'Enter text here...'" [(ngModel)]="section.html"></angular-editor>
+            <angular-editor [config]="editorConfig" [placeholder]="'Enter text here...'" [(ngModel)]="section.html"></angular-editor>
           </div>
         </div>
       </div>
