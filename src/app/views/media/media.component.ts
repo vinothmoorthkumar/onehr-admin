@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { MediaService, AuthorizationService } from '../../services';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { PageEvent } from '@angular/material/paginator';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
-
+import  * as settings from './media.pages'
 @Component({
   selector: 'app-media',
   templateUrl: './media.component.html',
@@ -15,8 +15,9 @@ export class MediaComponent implements OnInit {
   @ViewChild('myModal') public myModal: ModalDirective;
   @ViewChild('uploadModal') public uploadModal: ModalDirective;
   @ViewChild('mediaModal') public mediaModal: ModalDirective;
+  @Input() ngInit;
   Form: FormGroup;
-  deleteItem
+  deleteItem;
   constructor(private formBuilder: FormBuilder,
     private toastr: ToastrService,
     private service: MediaService, private auth: AuthorizationService) { }
@@ -36,61 +37,63 @@ export class MediaComponent implements OnInit {
   search = '';
   progress = 0;
   fileSize = 'single';
-  imageTypes = ["image/jpeg", "image/png", "image/jpg","image/svg+xml"]
-  pages: any = [
-    {
-      name: 'Home',
-      key: 'home',
-      sections: [{
-        name: "slider",
-        key: "home_slider",
-        allowFiles: this.imageTypes,
-        extras: [{ key: 'title', name: 'Title' }, { key: 'subtitle', name: 'SubTitle' }, { key: 'link', name: 'Link' }, { key: 'button', name: 'Button Content' }]
-      },
-      {
-        name: "Our Partners",
-        key: "home_our_partners",
-        file: "multiple",
-        allowFiles: this.imageTypes,
-        extras: [{ key: 'link', name: 'Link' }]
-      },
-      {
-        name: "Testimonial",
-        key: "home_testimonial",
-        file: "multiple",
-        allowFiles: this.imageTypes,
-        extras: [{ key: 'feedback', name: 'Feedback' },{ key: 'name', name: 'Name' },{ key: 'designation', name: 'Designation' },{ key: 'department', name: 'Department' }]
-      }]
-    },
-    {
-      name: 'About Us',
-      key: 'about_us',
-      sections: [{
-        name: "Our mandate",
-        key: "aboutUs_our_mandate",
-        file: "single",
-        allowFiles: this.imageTypes
-      },
-      {
-        name: "Our Partners",
-        key: "aboutUs_our_partners",
-        file: "multiple",
-        allowFiles: this.imageTypes,
-        extras: [{ key: 'link', name: 'Link' }]
-      },
-      {
-        name: "Brochure",
-        key: "aboutUs_Brochure",
-        file: "single",
-        allowFiles: ['application/pdf']
-      }
-      ]
-    },
-    {
-      name: 'Job Classification',
-      key: 'job-classification'
-    }
-  ]
+  imageTypes = settings.settings.imageFormate;
+  pages:any = settings.settings.pages;
+  
+  // [
+  //   {
+  //     name: 'Home',
+  //     key: 'home',
+  //     sections: [{
+  //       name: "slider",
+  //       key: "home_slider",
+  //       allowFiles: this.imageTypes,
+  //       extras: [{ key: 'title', name: 'Title' }, { key: 'subtitle', name: 'SubTitle' }, { key: 'link', name: 'Link' }, { key: 'button', name: 'Button Content' }]
+  //     },
+  //     {
+  //       name: "Our Partners",
+  //       key: "home_our_partners",
+  //       file: "multiple",
+  //       allowFiles: this.imageTypes,
+  //       extras: [{ key: 'link', name: 'Link' }]
+  //     },
+  //     {
+  //       name: "Testimonial",
+  //       key: "home_testimonial",
+  //       file: "multiple",
+  //       allowFiles: this.imageTypes,
+  //       extras: [{ key: 'feedback', name: 'Feedback' },{ key: 'name', name: 'Name' },{ key: 'designation', name: 'Designation' },{ key: 'department', name: 'Department' }]
+  //     }]
+  //   },
+  //   {
+  //     name: 'About Us',
+  //     key: 'about_us',
+  //     sections: [{
+  //       name: "Our mandate",
+  //       key: "aboutUs_our_mandate",
+  //       file: "single",
+  //       allowFiles: this.imageTypes
+  //     },
+  //     {
+  //       name: "Our Partners",
+  //       key: "aboutUs_our_partners",
+  //       file: "multiple",
+  //       allowFiles: this.imageTypes,
+  //       extras: [{ key: 'link', name: 'Link' }]
+  //     },
+  //     {
+  //       name: "Brochure",
+  //       key: "aboutUs_Brochure",
+  //       file: "single",
+  //       allowFiles: ['application/pdf']
+  //     }
+  //     ]
+  //   },
+  //   {
+  //     name: 'Job Classification',
+  //     key: 'job-classification'
+  //   }
+  // ]
   viewMedia = "";
   pageEvent: PageEvent;
 
@@ -125,6 +128,7 @@ export class MediaComponent implements OnInit {
   }
 
   changeSection(sec) {
+    console.log('changesection called')
     this.Form.removeControl('extras');
     this.fileSize = sec.file;
     this.selectedSection = sec;
@@ -181,6 +185,10 @@ export class MediaComponent implements OnInit {
     this.selectedPage = this.pages.find(ele => {
       return ele.key == page
     }).sections;
+    if(this.Form.value && this.Form.value.section){
+      this.Form.patchValue({section:''});
+    }
+    this.selectedSection = [];
   }
 
   uploadFile(event) {
@@ -309,6 +317,6 @@ export class MediaComponent implements OnInit {
 
   copied(){
     this.toastr.success('File Path Copied Successfully');
-
   }
+  
 }
