@@ -47,10 +47,12 @@
                 <td class="col-2">{{media.fileType}}</td>
                 <td class="col-2">
                   <button class="btn btn-sm btn-pill btn-primary" *ngIf="Isauth('edit')"
-                  (click)="openUploadModel(media._id)"><i class="fa fa-pencil"></i></button>
-                  <button class="btn btn-sm btn-pill btn-warning" (click)='copied()' [cdkCopyToClipboard]="media.filePath"><i class="fa fa-clipboard"></i></button>
-                  <button [disabled]="!this.imageTypes.includes(media.fileType)" class="btn btn-sm btn-pill btn-secondary" *ngIf="Isauth('view')"
-                  (click)="setViewMedia(media.filePath)"><i class="fa fa-eye"></i></button>
+                    (click)="openUploadModel(media._id)"><i class="fa fa-pencil"></i></button>
+                  <button class="btn btn-sm btn-pill btn-warning" (click)='copied()'
+                    [cdkCopyToClipboard]="media.filePath"><i class="fa fa-clipboard"></i></button>
+                  <button [disabled]="!this.imageTypes.includes(media.fileType)"
+                    class="btn btn-sm btn-pill btn-secondary" *ngIf="Isauth('view')"
+                    (click)="setViewMedia(media.filePath)"><i class="fa fa-eye"></i></button>
                   <button class="btn btn-sm btn-pill btn-danger" *ngIf="Isauth('delete')"
                     (click)="[myModal.show(),setDeleteId(media._id)]"><i class="fa fa-trash"></i></button>
                 </td>
@@ -135,8 +137,9 @@
             <div *ngIf="selectedPage && selectedPage.length>0" class="form-group row">
               <label class="col-md-3 col-form-label">Section</label>
               <div class="col-md-9 col-form-label">
-                <div class="form-check" >
-                  <input formControlName="section"  class="form-check-input" type="radio" name="section" id='noneSection' value="none" checked>
+                <div class="form-check">
+                  <input formControlName="section" class="form-check-input" type="radio" name="section" id='noneSection'
+                    value="none" checked>
                   <label class="form-check-label" for='noneSection'>
                     None
                   </label>
@@ -151,19 +154,24 @@
               </div>
             </div>
             <div *ngIf="selectedSection && selectedSection.extras">
-              <div formGroupName="extras" class="form-group row"  *ngFor="let extra of selectedSection.extras; index as i">
+
+              <div formGroupName="extras" class="form-group row"
+                *ngFor="let extra of selectedSection.extras; index as i">
                 <label class="col-md-3 col-form-label" for="name-input">{{extra.name}}</label>
                 <div class="col-md-9">
-                  <input type="text" [formControlName]="extra.key" id="text-input" [name]="extra.key" class="form-control">
+                  <input *ngIf="!extra.inputType" type="text" [formControlName]="extra.key" id="text-input" [name]="extra.key"
+                    class="form-control">
+                  <textarea *ngIf="extra.inputType == 'textbox'" class="form-control" [formControlName]="extra.key" id="text-input" [name]="extra.key" placeholder="Content.."></textarea>
                 </div>
               </div>
+
             </div>
 
             <div class="form-group row">
               <label class="col-form-label btn btn-sm btn-primary chs-file" for="file-upload">Choose File</label>
               <div style="width: 100%; text-align: center;">
-                <input type="file" style="display:none"
-                  (change)="uploadFile($event)" id="file-upload" class="form-control" />
+                <input type="file" style="display:none" (change)="uploadFile($event)" id="file-upload"
+                  class="form-control" />
                 <div class="invalid-feedback" *ngIf="submitted && f.files.errors && f.files.errors.required">
                   File is required
                 </div>
@@ -189,18 +197,18 @@
   </div>
 
   <div bsModal #mediaModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">View Media</h4>
-        <button type="button" class="close" (click)="mediaModal.hide()" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body text-center">
-        <img [src]="viewMedia">
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">View Media</h4>
+          <button type="button" class="close" (click)="mediaModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body text-center">
+          <img [src]="viewMedia">
+        </div>
       </div>
     </div>
   </div>
-</div>

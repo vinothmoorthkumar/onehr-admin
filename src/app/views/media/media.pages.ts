@@ -1,6 +1,6 @@
-const imageTypes = ["image/jpeg", "image/png", "image/jpg","image/svg+xml"]
+const imageTypes = ["image/jpeg", "image/png", "image/jpg", "image/svg+xml"]
 export const settings = {
-    imageFormate:imageTypes,
+    imageFormate: imageTypes,
     pages: [
         {
             name: 'Home',
@@ -9,7 +9,12 @@ export const settings = {
                 name: "slider",
                 key: "home_slider",
                 allowFiles: imageTypes,
-                extras: [{ key: 'title', name: 'Title' }, { key: 'subtitle', name: 'SubTitle' }, { key: 'link', name: 'Link' }, { key: 'button', name: 'Button Content' }]
+                extras: [
+                    { key: 'title', name: 'Title' ,inputType:'textbox'},
+                    { key: 'subtitle', name: 'SubTitle',inputType:'textbox' },
+                    { key: 'link', name: 'Link' },
+                    { key: 'button', name: 'Button Content' }
+                ]
             },
             {
                 name: "Our Partners",
