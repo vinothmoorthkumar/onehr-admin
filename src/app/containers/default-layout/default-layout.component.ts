@@ -10,19 +10,63 @@ import { Router } from '@angular/router';
 export class DefaultLayoutComponent implements OnInit {
   public sidebarMinimized = false;
   public navItems = [];
-  constructor(private authorization: AuthorizationService,private auth: AuthService, private router: Router) {
-  }
-  
-  ngOnInit(){
-    this.navItems=navItems.filter(ele=>{
-      if(ele.acl && ele.acl.module && ele.acl.permission){
-        return this.authorization.IsAuth(ele.acl.module,ele.acl.permission)
-      }
-      return true;
-    })
+  constructor(private authorization: AuthorizationService, private auth: AuthService, private router: Router) {
   }
 
-  checkpermission(){
+  ngOnInit() {
+
+
+
+    // this.navItems = navItems.filter(ele => {
+    //   if (ele.acl && ele.acl.module && ele.acl.permission) {
+    //     return this.authorization.IsAuth(ele.acl.module, ele.acl.permission)
+    //   }
+    //   return true;
+    // })
+
+    if(this.authorization.IsSuperAdmin()){
+      console.log('super admin')
+      this.navItems = navItems
+    }else{
+      console.log('no super admin')
+      const createArray = (array, i) => {
+        let pageObj = [];
+        let pushobj = () => {
+          if(array[i - 1].slug=='page' || array[i - 1].slug=='service'){
+            pageObj.push(array[i - 1])
+          }
+          if (array[i - 1].page && array[i - 1].slug && this.authorization.IsPageAuth(array[i - 1].slug,'view')) {
+            pageObj.push(array[i - 1])
+          }
+          if(!array[i - 1].page && this.authorization.IsAuth(array[i - 1].acl.module, array[i - 1].acl.permission)){
+            pageObj.push(array[i - 1])
+          }
+        };
+        let pushData = () => {
+          i += 1;
+          if (array.length >= i) {
+  
+            if (array[i - 1].children) {
+              array[i - 1].children = createArray(array[i - 1].children, 0)
+              pushobj();
+              pushData();
+            } else {
+              pushobj();
+              pushData()
+            }
+          }
+        }
+        pushData();
+      
+  
+        return pageObj;
+      }
+      this.navItems =createArray(navItems, 0);
+    }
+
+  }
+
+  checkpermission() {
 
   }
 

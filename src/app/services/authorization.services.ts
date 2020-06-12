@@ -15,11 +15,34 @@ export class AuthorizationService {
         const decodedToken = this.helper.decodeToken(currentUser.token);
         if (decodedToken.superadmin) {
             return true;
-        }else{
+        } else {
             let getModule = decodedToken.permission.find(ele => {
                 return ele.module == module;
             });
-            return getModule.permission.includes(access);
+            if (getModule) {
+                return getModule.permission.includes(access);
+            }
+            return false;
+        }
+    }
+
+    IsPageAuth(slug, access) {
+        const currentUser = this.auth.currentUserValue;
+        const decodedToken = this.helper.decodeToken(currentUser.token);
+        if (decodedToken.superadmin) {
+            return true;
+        } else {
+            return decodedToken.pagePermission[access].includes(slug);
+        }
+    }
+
+    IsSuperAdmin() {
+        const currentUser = this.auth.currentUserValue;
+        const decodedToken = this.helper.decodeToken(currentUser.token);
+        if (decodedToken.superadmin) {
+            return true;
+        } else {
+           return false;
         }
     }
 

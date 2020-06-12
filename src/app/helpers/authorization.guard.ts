@@ -17,21 +17,16 @@ export class AuthorizationGuard implements CanActivate {
         if (decodedToken.superadmin) {
             return true;
         }
-
         if (route.data && route.data.permission && route.data.module) {
             let getModule = decodedToken.permission.find(ele => {
                 return ele.module == route.data.module;
             });
+
             return route.data.permission.every(ele => {
                 return getModule.permission.includes(ele);
             })
         } else {
             return true;
         }
-
-
-        // not logged in so redirect to login page with the return url
-        // this.router.navigate(['/login']);
-        // return false;
     }
 }

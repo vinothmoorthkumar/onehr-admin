@@ -45,11 +45,6 @@ export class EditComponent implements OnInit {
   }
 
   submit(form) {
-    console.log('itemsAsObjects 1', this.itemsAsObjects)
-    // for (const property in this.itemsAsObjects) {
-    //   this.itemsAsObjects[property] = this.itemsAsObjects[property].map(ele => ele.slug)
-    // }
-
     this.submitted = true;
     if (form.valid && this.name) {
       form.value.forEach((x, i) => {

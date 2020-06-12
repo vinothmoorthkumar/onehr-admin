@@ -5,6 +5,7 @@ export const navItems: any = [
   {
     name: 'Users',
     url: '/user/list',
+    slug: 'home',
     acl: {
       module: 'users',
       permission:'view'
@@ -24,6 +25,8 @@ export const navItems: any = [
     name: 'Pages',
     url: '/pages',
     icon: 'fa fa-newspaper-o fa-lg',
+    slug:'page',
+    page:true,
     acl: {
       module: 'pages',
       permission:'view'
@@ -32,37 +35,44 @@ export const navItems: any = [
       {
         name: 'Home',
         url: '/pages/home',
-        slug: 'home'
+        slug: 'home',
+        page:true
       },
       {
         name: 'About Us',
         url: '/pages/about',
-        slug: 'about_us'
+        slug: 'about_us',
+        page:true
       },
       {
         name: 'Service',
         url: '/buttons/brand-buttons',
         slug: 'service',
+        page:true,
         children: [
           {
             name: 'Job Classification',
             url: '/buttons/dropdowns',
             slug: 'job_classification',
+            page:true
           },
           {
             name: 'Basic Reference Verification',
             url: '/buttons/dropdowns',
             slug: 'basic_reference_verification',
+            page:true
           },
           {
             name: 'Organizational Design',
             url: '/buttons/dropdowns',
             slug: 'organizational_design',
+            page:true
           },
           {
             name: 'FAQ',
             url: '/buttons/dropdowns',
             slug: 'faq',
+            page:true
           },
         ]
       },
@@ -70,6 +80,7 @@ export const navItems: any = [
         name: 'Contact',
         url: '/buttons/dropdowns',
         slug: 'contact',
+        page:true
       },
     ]
   },
@@ -81,6 +92,6 @@ export const navItems: any = [
       permission:'view'
     },
     icon: 'fa fa-cloud-upload',
-  },
+  }
 
 ];
