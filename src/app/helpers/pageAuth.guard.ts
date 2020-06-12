@@ -4,7 +4,7 @@ import { JwtHelperService } from "@auth0/angular-jwt";
 import { AuthService } from '../services';
 
 @Injectable({ providedIn: 'root' })
-export class AuthorizationGuard implements CanActivate {
+export class pageAuthGuard implements CanActivate {
     constructor(
         private router: Router,
         private auth: AuthService,
@@ -16,16 +16,8 @@ export class AuthorizationGuard implements CanActivate {
         const decodedToken = this.helper.decodeToken(currentUser.token);
         if (decodedToken.superadmin) {
             return true;
-        }
-        if (route.data && route.data.permission && route.data.module) {
-            let getModule = decodedToken.permission.find(ele => {
-                return ele.module == route.data.module;
-            });
-            return route.data.permission.every(ele => {
-                return getModule.permission.includes(ele);
-            })
-        } else {
-            return true;
+        }else{
+            return decodedToken.pagePermission[route.data.access].includes(route.data.slug);
         }
     }
 }

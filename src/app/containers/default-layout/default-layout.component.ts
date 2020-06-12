@@ -15,20 +15,9 @@ export class DefaultLayoutComponent implements OnInit {
 
   ngOnInit() {
 
-
-
-    // this.navItems = navItems.filter(ele => {
-    //   if (ele.acl && ele.acl.module && ele.acl.permission) {
-    //     return this.authorization.IsAuth(ele.acl.module, ele.acl.permission)
-    //   }
-    //   return true;
-    // })
-
     if(this.authorization.IsSuperAdmin()){
-      console.log('super admin')
       this.navItems = navItems
     }else{
-      console.log('no super admin')
       const createArray = (array, i) => {
         let pageObj = [];
         let pushobj = () => {

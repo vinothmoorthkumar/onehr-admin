@@ -4,12 +4,11 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import {PagesResolverService} from './pages.resolve';
-import { AuthorizationGuard } from '../../helpers';
+import { pageAuthGuard } from '../../helpers';
 
 const routes: Routes = [
   {
     path: '',
-    canActivate: [AuthorizationGuard],
     data: {
       title: 'Pages',
       module: 'pages',
@@ -18,15 +17,18 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'home'
+        redirectTo: 'home',
+        canActivate: [pageAuthGuard],
       },
       {
         path: 'home',
         component: HomeComponent,
         data: {
           title: 'Home',
-          slug: 'home'
+          slug: 'home',
+          access: 'view'
         },
+        canActivate: [pageAuthGuard],
         resolve: { page: PagesResolverService }
       },
       {
@@ -34,8 +36,10 @@ const routes: Routes = [
         component: AboutComponent,
         data: {
           title: 'About',
-          slug: 'about_us'
+          slug: 'about_us',
+          access: 'view'
         },
+        canActivate: [pageAuthGuard],
         resolve: { page: PagesResolverService }
       }
     ]
