@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormArray, FormControl } from '@angular/forms';
 import { RolesService } from '../../../services';
 import { Router, ActivatedRoute } from '@angular/router';
+import * as settings from '../pages.enum'
 
 @Component({
   selector: 'app-edit',
@@ -15,50 +16,7 @@ export class EditComponent implements OnInit {
   edit = false;
   editObj: any;
   id: any;
-  ModulessData = [
-    {
-      module: 'users',
-      name: 'Users',
-      permission: [
-        { key: 'view', selected: false },
-        { key: 'add', selected: false },
-        { key: 'update', selected: false },
-        { key: 'delete', selected: false },
-      ]
-    },
-    {
-      module: 'roles',
-      name: 'Roles',
-      permission: [
-        { key: 'view', selected: false },
-        { key: 'add', selected: false },
-        { key: 'update', selected: false },
-        { key: 'delete', selected: false },
-      ]
-    },
-    {
-      module: 'pages',
-      name: 'Pages',
-      permission: [
-        { key: 'view', selected: false },
-        { key: 'add', selected: false },
-        { key: 'update', selected: false },
-        { key: 'delete', selected: false },
-      ]
-    },
-    {
-      module: 'media',
-      name: 'Media',
-      permission: [
-        { key: 'view', selected: false },
-        { key: 'add', selected: false },
-        { key: 'update', selected: false },
-        { key: 'delete', selected: false },
-      ]
-    }
-  ];
-
-
+  ModulessData = settings.setting.modules
 
   constructor(private router: Router,
     private route: ActivatedRoute,
@@ -74,6 +32,7 @@ export class EditComponent implements OnInit {
         this.editObj = response.role.data;
         this.name = this.editObj.name;
         this.ModulessData = this.editObj.acl;
+        this.itemsAsObjects = this.editObj.page;
       });
     }
     this.form = new FormArray(this.ModulessData.map(x => new FormArray([])), this.customValidatorOverAll(1));
@@ -86,6 +45,11 @@ export class EditComponent implements OnInit {
   }
 
   submit(form) {
+    console.log('itemsAsObjects 1', this.itemsAsObjects)
+    // for (const property in this.itemsAsObjects) {
+    //   this.itemsAsObjects[property] = this.itemsAsObjects[property].map(ele => ele.slug)
+    // }
+
     this.submitted = true;
     if (form.valid && this.name) {
       form.value.forEach((x, i) => {
@@ -93,12 +57,12 @@ export class EditComponent implements OnInit {
           this.ModulessData[i].permission[j].selected = c;
         })
       })
-      if(this.edit){
-        this.service.update(this.id,{ name: this.name, acl: this.ModulessData }).subscribe((data: any) => {
+      if (this.edit) {
+        this.service.update(this.id, { name: this.name, acl: this.ModulessData, page: this.itemsAsObjects }).subscribe((data: any) => {
           this.router.navigate(['/role/list']);
         });
-      }else{
-        this.service.create({ name: this.name, acl: this.ModulessData }).subscribe((data: any) => {
+      } else {
+        this.service.create({ name: this.name, acl: this.ModulessData, page: this.itemsAsObjects }).subscribe((data: any) => {
           this.router.navigate(['/role/list']);
         });
       }
@@ -120,5 +84,13 @@ export class EditComponent implements OnInit {
       return count >= min ? null : { error: "At least select " + min }
     }
   }
+
+  itemsAsObjects = {
+    view: [],
+    add: [],
+    update: [],
+    delete: []
+  };
+  autocompleteItemsAsObjects = settings.setting.pages
 
 }

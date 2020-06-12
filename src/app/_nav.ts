@@ -32,36 +32,44 @@ export const navItems: any = [
       {
         name: 'Home',
         url: '/pages/home',
+        slug: 'home'
       },
       {
         name: 'About Us',
         url: '/pages/about',
+        slug: 'about_us'
       },
       {
         name: 'Service',
         url: '/buttons/brand-buttons',
+        slug: 'service',
         children: [
           {
             name: 'Job Classification',
             url: '/buttons/dropdowns',
+            slug: 'job_classification',
           },
           {
             name: 'Basic Reference Verification',
             url: '/buttons/dropdowns',
+            slug: 'basic_reference_verification',
           },
           {
             name: 'Organizational Design',
             url: '/buttons/dropdowns',
+            slug: 'organizational_design',
           },
           {
             name: 'FAQ',
             url: '/buttons/dropdowns',
+            slug: 'faq',
           },
         ]
       },
       {
         name: 'Contact',
         url: '/buttons/dropdowns',
+        slug: 'contact',
       },
     ]
   },

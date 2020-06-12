@@ -5,12 +5,13 @@
                 <div class="card-header">
                     <span class="table_title">Roles</span>
                 </div>
-                
+
                 <!-- card-body start -->
                 <div class="card-body">
-                    <input type="text" class="form-control" [(ngModel)] ="name" placeholder="Enter the Name of Role" required>
+                    <input type="text" class="form-control" [(ngModel)]="name" placeholder="Enter the Name of Role"
+                        required>
                     <div class="invalid-feedback" *ngIf="submitted && !name"> Name is required </div>
-                    <form [formGroup]="form" (ngSubmit)="submit(form)">
+                    <form [formGroup]="form">
                         <br />
                         <table class="table">
                             <tbody>
@@ -23,13 +24,74 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <button class="btn btn-primary float-right" *ngIf="!edit" type="submit">Submit</button>
-                        <button class="btn btn-primary float-right" *ngIf="edit" type="submit">Update</button>
-
                     </form>
+                    <div>
+                        <div class="card-header">
+                            <span class="table_title">Pages</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label" for="page-view">View</label>
+                                <div class="col-md-9">
+                                    <tag-input [(ngModel)]="itemsAsObjects.view" [onlyFromAutocomplete]="true" [displayBy]="'name'"
+                                        [identifyBy]="'slug'">
+                                        <tag-input-dropdown [showDropdownIfEmpty]="true" [displayBy]="'name'"
+                                            [identifyBy]="'slug'" [autocompleteItems]="autocompleteItemsAsObjects">
+                                        </tag-input-dropdown>
+                                    </tag-input>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label" for="page-add">Add</label>
+                                <div class="col-md-9">
+                                    <tag-input [(ngModel)]="itemsAsObjects.add" [onlyFromAutocomplete]="true" [displayBy]="'name'"
+                                        [identifyBy]="'slug'">
+                                        <tag-input-dropdown [showDropdownIfEmpty]="true" [displayBy]="'name'"
+                                            [identifyBy]="'slug'" [autocompleteItems]="autocompleteItemsAsObjects">
+                                        </tag-input-dropdown>
+                                    </tag-input>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label" for="page-update">Update</label>
+                                <div class="col-md-9">
+                                    <tag-input [(ngModel)]="itemsAsObjects.update" [onlyFromAutocomplete]="true" [displayBy]="'name'"
+                                        [identifyBy]="'slug'">
+                                        <tag-input-dropdown [showDropdownIfEmpty]="true" [displayBy]="'name'"
+                                            [identifyBy]="'slug'" [autocompleteItems]="autocompleteItemsAsObjects">
+                                        </tag-input-dropdown>
+                                    </tag-input>
+                                </div>
+                            </div>
+
+                            
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label" for="page-delete">Delete</label>
+                                <div class="col-md-9">
+                                    <tag-input [(ngModel)]="itemsAsObjects.delete" [onlyFromAutocomplete]="true" [displayBy]="'name'"
+                                        [identifyBy]="'slug'">
+                                        <tag-input-dropdown [showDropdownIfEmpty]="true" [displayBy]="'name'"
+                                            [identifyBy]="'slug'" [autocompleteItems]="autocompleteItemsAsObjects">
+                                        </tag-input-dropdown>
+                                    </tag-input>
+                                </div>
+                            </div>
+                           
+                        </div>
+                    </div>
+                    <button class="btn btn-primary float-right" (click)="submit(form)" *ngIf="!edit"
+                        type="submit">Submit</button>
+                    <button class="btn btn-primary float-right" (click)="submit(form)" *ngIf="edit"
+                        type="submit">Update</button>
+
+
                     <div class="invalid-feedback" *ngIf="submitted && form?.errors">Select atleast One </div>
                 </div>
                 <!-- card-body end -->
+
+
             </div>
         </div>
     </div>

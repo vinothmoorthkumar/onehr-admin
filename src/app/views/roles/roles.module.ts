@@ -6,6 +6,7 @@ import { EditComponent } from './edit/edit.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { TagInputModule } from 'ngx-chips';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     ReactiveFormsModule,
     FormsModule,
     ModalModule.forRoot(),
-    MatPaginatorModule
+    MatPaginatorModule,
+    TagInputModule
   ]
 })
 export class RolesModule { }
