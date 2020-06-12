@@ -50,8 +50,8 @@ export class AboutComponent implements OnInit {
     // console.log(event);
   }
 
-  Isauth(access) {
-    return this.auth.IsAuth('users', access);
+  Isauth(access){
+    return this.auth.IsPageAuth('about_us',access);
   }
 
   addsec() {

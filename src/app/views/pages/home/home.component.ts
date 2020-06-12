@@ -47,7 +47,7 @@ export class HomeComponent implements OnInit {
   }
 
   Isauth(access){
-    return this.auth.IsAuth('users',access);
+    return this.auth.IsPageAuth('home',access);
   }
 
   addsec(){
