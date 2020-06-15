@@ -3,11 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User } from '../models';
+import { JwtHelperService } from "@auth0/angular-jwt";
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
     private currentUserSubject: BehaviorSubject<User>;
     public currentUser: Observable<User>;
+    helper = new JwtHelperService();
 
     constructor(private http: HttpClient) {
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
@@ -16,6 +18,12 @@ export class AuthService {
 
     public get currentUserValue(): User {
         return this.currentUserSubject.value;
+    }
+
+    getCurrentUser(){
+        let data= this.currentUserValue;
+        
+        return  this.helper.decodeToken(data.token);
     }
 
     login(username, password) {

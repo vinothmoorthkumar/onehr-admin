@@ -1,16 +1,21 @@
 import { INavData } from '@coreui/angular';
 import * as slug from './_slug'
 export const navItems: any = [
-
+  {
+    name: 'Profile',
+    url: '/profile/view',
+    slug: 'profile',
+    icon: 'fa fa-user-circle fa-lg'
+  },
   {
     name: 'Users',
     url: '/user/list',
-    slug: 'home',
+    slug: 'user',
     acl: {
       module: 'users',
       permission:'view'
     },
-    icon: 'fa fa-user-circle fa-lg'
+    icon: 'fa fa-users fa-lg'
   },
   {
     name: 'Role',

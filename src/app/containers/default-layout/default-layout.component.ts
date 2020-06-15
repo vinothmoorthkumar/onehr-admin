@@ -27,7 +27,10 @@ export class DefaultLayoutComponent implements OnInit {
           if (array[i - 1].page && array[i - 1].slug && this.authorization.IsPageAuth(array[i - 1].slug,'view')) {
             pageObj.push(array[i - 1])
           }
-          if(!array[i - 1].page && this.authorization.IsAuth(array[i - 1].acl.module, array[i - 1].acl.permission)){
+          if(!array[i - 1].page && array[i - 1].acl && this.authorization.IsAuth(array[i - 1].acl.module, array[i - 1].acl.permission)){
+            pageObj.push(array[i - 1])
+          }
+          if(!array[i - 1].acl && !array[i - 1].page){
             pageObj.push(array[i - 1])
           }
         };

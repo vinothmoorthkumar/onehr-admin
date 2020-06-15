@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
-import { HttpClient , HttpParams} from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
 
-  constructor(private http: HttpClient) { 
-    
+  constructor(private http: HttpClient) {
+
   }
 
   create(data) {
@@ -24,10 +24,10 @@ export class UsersService {
     params = params.append('limit', page.perPage);
     params = params.append('sortby', page.sort.col);
     params = params.append('order', page.sort.order);
-    if(page.search != ""){
+    if (page.search != "") {
       params = params.append('search', page.search);
     }
-    return this.http.get<any>(`/api/user`, {params: params})
+    return this.http.get<any>(`/api/user`, { params: params })
       .pipe(map(data => {
         return data;
       }));
@@ -47,8 +47,8 @@ export class UsersService {
       }));
   }
 
-  update(id,data) {
-    return this.http.put<any>(`/api/user/${id}`,data)
+  update(id, data) {
+    return this.http.put<any>(`/api/user/${id}`, data)
       .pipe(map(data => {
         return data;
       }));
@@ -56,6 +56,13 @@ export class UsersService {
 
   delete(id) {
     return this.http.delete<any>(`/api/user/${id}`)
+      .pipe(map(data => {
+        return data;
+      }));
+  }
+
+  changePassword(id,data) {
+    return this.http.post<any>(`/api/user/changepassword/${id}`,data)
       .pipe(map(data => {
         return data;
       }));

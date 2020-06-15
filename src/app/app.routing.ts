@@ -12,7 +12,7 @@ import { AuthGuard, AuthorizationGuard } from './helpers';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'user',
+    redirectTo: 'profile',
     pathMatch: 'full',
   },
   {
@@ -44,6 +44,10 @@ export const routes: Routes = [
       title: 'Home'
     },
     children: [
+      {
+        path: 'profile',
+        loadChildren: () => import('./views/profile/profile.module').then(m => m.ProfileModule)
+      },
       {
         path: 'user',
         loadChildren: () => import('./views/users/users.module').then(m => m.UsersModule)

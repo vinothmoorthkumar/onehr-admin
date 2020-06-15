@@ -1,0 +1,122 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <strong class="test">Profile</strong>
+                <span class="float-right">
+                    <button class="btn btn-primary" (click)="changePasswordModal.show()">Change Password</button>
+                </span>
+            </div>
+            <div class="card-body">
+                <form [formGroup]="Form" class="form-horizontal">
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="name-input">Name</label>
+                        <div class="col-md-9">
+                            <input type="text" formControlName="name" id="text-input" name="name" class="form-control"
+                                placeholder="Enter full name">
+                            <!-- <div class="invalid-feedback" *ngIf="submitted && f.name.errors && f.name.errors.required">
+                                Name is required 
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="text-input">Username</label>
+                        <div class="col-md-9">
+                            <input type="text" id="username-input" formControlName="username" name="username"
+                                class="form-control" placeholder="Enter username">
+                            <!-- <div class="invalid-feedback"
+                                *ngIf="submitted && f.username.errors && f.username.errors.required">Username is
+                                required
+                            </div> -->
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="email-input">Email</label>
+                        <div class="col-md-9">
+                            <input type="email" id="email-input" formControlName="email" name="email"
+                                class="form-control" placeholder="Enter Email" autocomplete="email">
+                            <div class="invalid-feedback"
+                                *ngIf="submitted && f.email.errors && f.email.errors.required">Email is required
+                            </div>
+                            <!-- <div class="invalid-feedback"
+                                *ngIf="submitted && f.email.errors && f.email.errors.pattern">Please enter valid email address
+                             </div> -->
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="role-input">Role</label>
+                        <div class="col-md-9">
+                            <input type="text" id="role-input" formControlName="role" name="role" class="form-control"
+                                placeholder="role" autocomplete="current-password">
+                            <!-- <div class="invalid-feedback"
+                                *ngIf="submitted && f.password.errors && f.password.errors.required">Password is
+                                required
+                            </div> -->
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- <div class="card-footer">
+                <button type="submit" (click)="onSubmit()" class="btn btn-sm btn-primary float-right"> Submit</button>
+            </div> -->
+        </div>
+    </div>
+</div>
+
+<div bsModal #changePasswordModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Change Password</h4>
+                <button type="button" class="close" (click)="changePasswordModal.hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="PasswordForm" class="form-horizontal">
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="name-input">Old Password</label>
+                        <div class="col-md-9">
+                            <input type="password" formControlName="oldpassword" id="text-input" name="oldpassword" class="form-control"
+                                placeholder="Enter Old Password">
+                            <div class="invalid-feedback" *ngIf="Changesubmitted && pf.oldpassword.errors && pf.oldpassword.errors.required">
+                               Old Password is required
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="name-input">Password</label>
+                        <div class="col-md-9">
+                            <input type="password" formControlName="password" id="text-input" name="password" class="form-control"
+                                placeholder="Enter Password">
+                            <div class="invalid-feedback" *ngIf="Changesubmitted && pf.password.errors && pf.password.errors.required">
+                                Password is required
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="name-input">Confirm Password</label>
+                        <div class="col-md-9">
+                            <input type="password" formControlName="confirmPassword" id="text-input" name="confirmPassword" class="form-control"
+                                placeholder="Enter Confirm Password">
+                            <div class="invalid-feedback" *ngIf="Changesubmitted && pf.confirmPassword.errors && pf.confirmPassword.errors.required">
+                                Confirm password is required
+                            </div>
+                            <div class="invalid-feedback" *ngIf="Changesubmitted && PasswordForm.hasError('notSame')">
+                             Password is not matching
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="changePasswordModal.hide()">Cancel</button>
+                <button type="button" class="btn btn-primary" (click)="updatePassword()">Change</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
