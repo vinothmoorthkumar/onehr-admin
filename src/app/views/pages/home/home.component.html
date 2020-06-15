@@ -3,10 +3,7 @@
     <div class="card-header">
       <strong class="test">About Us</strong>
       <span class="float-right">
-        <button type="button" class="btn btn-primary"
-          tooltip="Short code: #aboutUs_our_mandate, #ourPartnerImg, #aboutUs_Brochure">
-          <i class="fa fa-info-circle"></i>
-        </button>
+        <button class="btn btn-warning" (click)="shortCode.show()"><i class="fa fa-info-circle"></i></button>
         <button class="btn btn-secondary" *ngIf="Isauth('add')" (click)="ourKeyModal.show()">Extras</button>
         <button class="btn btn-secondary" *ngIf="Isauth('add')" (click)="addsec()">Add new</button>
         <button class="btn btn-primary" *ngIf="Isauth('update')" (click)="publish()">Publish</button>
@@ -66,22 +63,26 @@
 
               <div class="form-group row">
                 <div class="col-md-6">
-                  <input type="text" formControlName="hr_per_unit_jc" id="text-input" name="hr_per_unit_jc" class="form-control"
-                    placeholder="1 JC">
-                  <div class="invalid-feedback" *ngIf="submitted && f.hr_per_unit_jc.errors && f.hr_per_unit_jc.errors.required">
+                  <input type="text" formControlName="hr_per_unit_jc" id="text-input" name="hr_per_unit_jc"
+                    class="form-control" placeholder="1 JC">
+                  <div class="invalid-feedback"
+                    *ngIf="submitted && f.hr_per_unit_jc.errors && f.hr_per_unit_jc.errors.required">
                     JC is required
                   </div>
-                  <div class="invalid-feedback" *ngIf="submitted && f.hr_per_unit_jc.errors && f.hr_per_unit_jc.errors.NotanNumber">
+                  <div class="invalid-feedback"
+                    *ngIf="submitted && f.hr_per_unit_jc.errors && f.hr_per_unit_jc.errors.NotanNumber">
                     JC should be a number
                   </div>
                 </div>
                 <div class="col-md-6">
-                  <input type="text" formControlName="hr_per_unit_rv" id="text-input" name="hr_per_unit_rv" class="form-control"
-                    placeholder="1 RV">
-                  <div class="invalid-feedback" *ngIf="submitted && f.hr_per_unit_rv.errors && f.hr_per_unit_rv.errors.required">
+                  <input type="text" formControlName="hr_per_unit_rv" id="text-input" name="hr_per_unit_rv"
+                    class="form-control" placeholder="1 RV">
+                  <div class="invalid-feedback"
+                    *ngIf="submitted && f.hr_per_unit_rv.errors && f.hr_per_unit_rv.errors.required">
                     RV is required
                   </div>
-                  <div class="invalid-feedback" *ngIf="submitted && f.hr_per_unit_rv.errors && f.hr_per_unit_rv.errors.NotanNumber">
+                  <div class="invalid-feedback"
+                    *ngIf="submitted && f.hr_per_unit_rv.errors && f.hr_per_unit_rv.errors.NotanNumber">
                     Rv should be a number
                   </div>
                 </div>
@@ -146,6 +147,28 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="ourKeyModal.hide()">Close</button>
         <button type="submit" class="btn btn-primary" (click)="submit()">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div bsModal #shortCode="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Short Codes</h4>
+        <button type="button" class="close" (click)="shortCode.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <ul class="list-group">
+          <li *ngFor="let code of shortCodeList; let i = index" class="list-group-item">{{code}}</li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="shortCode.hide()">Close</button>
       </div>
     </div>
   </div>

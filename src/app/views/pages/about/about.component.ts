@@ -15,6 +15,11 @@ export class AboutComponent implements OnInit {
   html: string;
   sections = [];
   mediaSections;
+  shortCodeList = [
+    '#aboutUs_our_mandate',
+    '#aboutUs_Brochure',
+    '#ourPartnerImg',
+  ]
   editorConfig: AngularEditorConfig = {
     editable: true,
     sanitize: false,

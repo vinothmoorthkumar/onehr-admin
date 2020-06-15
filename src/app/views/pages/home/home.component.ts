@@ -21,6 +21,19 @@ export class HomeComponent implements OnInit {
   Form: FormGroup;
   submitted = false;
   sections = [];
+  shortCodeList = [
+    '#home_slider',
+    '#testimonial',
+    '#iframe',
+    '#ourPartnerImg',
+    '#aboutUs_Brochure',
+    '#hr_per_unit_jc',
+    '#hr_per_unit_rv',
+    '#eav_rv',
+    '#eav_jc',
+    '#pc_pd',
+    '#pc_pw'
+  ]
   editorConfig: AngularEditorConfig = {
     editable: true,
     sanitize: false,
