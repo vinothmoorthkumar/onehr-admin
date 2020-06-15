@@ -1,46 +1,152 @@
 <div class="animated fadeIn">
-    <div class="card">
-      <div class="card-header">
-        <strong class="test">About Us</strong>
-        <span class="float-right">
-          <button type="button" class="btn btn-primary"
-                tooltip="Short code: #aboutUs_our_mandate, #ourPartnerImg, #aboutUs_Brochure">
-                <i class="fa fa-info-circle"></i>
+  <div class="card">
+    <div class="card-header">
+      <strong class="test">About Us</strong>
+      <span class="float-right">
+        <button type="button" class="btn btn-primary"
+          tooltip="Short code: #aboutUs_our_mandate, #ourPartnerImg, #aboutUs_Brochure">
+          <i class="fa fa-info-circle"></i>
         </button>
-          <button class="btn btn-secondary" *ngIf="Isauth('add')" (click)="addsec()">Add new</button>
-          <button class="btn btn-primary" *ngIf="Isauth('update')" (click)="publish()">Publish</button>
-        </span>
-      </div>
-      <div cdkDropList class="example-list p-3" (cdkDropListDropped)="drop($event)">
-  
-        <div class="animated fadeIn">
-          <div *ngFor="let section of sections; let i = index"  class="card">
-            <div class="card-header" cdkDrag>
-              {{section.name}}
-              <div class="card-header-actions">
-                <button type="button" *ngIf="Isauth('delete')" (click)="deletesec(i)" class="btn btn-danger">
-                  <i class="fa fa-trash"></i>
-                </button>
-                <button *ngIf="!section.collapse" type="button"  class="btn btn-secondary" cdkDragHandle>
-                  <i class="fa fa-arrows"></i>
-                </button>
-                <button type="button" class="btn btn-primary" (click)="section.collapse = !section.collapse">
-                  <i *ngIf="section.collapse" class="fa fa-compress"></i>
-                  <i *ngIf="!section.collapse" class="fa fa-expand"></i>
-                </button>
-              </div>
+        <button class="btn btn-secondary" *ngIf="Isauth('add')" (click)="ourKeyModal.show()">Extras</button>
+        <button class="btn btn-secondary" *ngIf="Isauth('add')" (click)="addsec()">Add new</button>
+        <button class="btn btn-primary" *ngIf="Isauth('update')" (click)="publish()">Publish</button>
+      </span>
+    </div>
+    <div cdkDropList class="example-list p-3" (cdkDropListDropped)="drop($event)">
+
+      <div class="animated fadeIn">
+        <div *ngFor="let section of sections; let i = index" class="card">
+          <div class="card-header" cdkDrag>
+            {{section.name}}
+            <div class="card-header-actions">
+              <button type="button" *ngIf="Isauth('delete')" (click)="deletesec(i)" class="btn btn-danger">
+                <i class="fa fa-trash"></i>
+              </button>
+              <button *ngIf="!section.collapse" type="button" class="btn btn-secondary" cdkDragHandle>
+                <i class="fa fa-arrows"></i>
+              </button>
+              <button type="button" class="btn btn-primary" (click)="section.collapse = !section.collapse">
+                <i *ngIf="section.collapse" class="fa fa-compress"></i>
+                <i *ngIf="!section.collapse" class="fa fa-expand"></i>
+              </button>
             </div>
-            <div class="card-body"
-                 (collapsed)="collapsed($event)"
-                 (expanded)="expanded($event)"
-                 [collapse]="!section.collapse">
-                 <input type="text" class="form-control" [(ngModel)] ="section.name" placeholder="Enter the Name of section" required>
-                 <br />
-                 <angular-editor [config]="editorConfig" [placeholder]="'Enter text here...'" [(ngModel)]="section.html"></angular-editor>
-            </div>
+          </div>
+          <div class="card-body" (collapsed)="collapsed($event)" (expanded)="expanded($event)"
+            [collapse]="!section.collapse">
+            <input type="text" class="form-control" [(ngModel)]="section.name" placeholder="Enter the Name of section"
+              required>
+            <br />
+            <angular-editor [config]="editorConfig" [placeholder]="'Enter text here...'" [(ngModel)]="section.html">
+            </angular-editor>
           </div>
         </div>
       </div>
-  
     </div>
   </div>
+</div>
+
+<div bsModal #ourKeyModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Extras</h4>
+        <button type="button" class="close" (click)="ourKeyModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="Form" class="form-horizontal">
+          <div class="card">
+            <div class="card-header">
+              Key Performance Indicators
+            </div>
+            <div class="card-body">
+              <strong> Hours per 1 Unit</strong>
+
+              <div class="form-group row">
+                <div class="col-md-6">
+                  <input type="text" formControlName="hr_per_unit_jc" id="text-input" name="hr_per_unit_jc" class="form-control"
+                    placeholder="1 JC">
+                  <div class="invalid-feedback" *ngIf="submitted && f.hr_per_unit_jc.errors && f.hr_per_unit_jc.errors.required">
+                    JC is required
+                  </div>
+                  <div class="invalid-feedback" *ngIf="submitted && f.hr_per_unit_jc.errors && f.hr_per_unit_jc.errors.NotanNumber">
+                    JC should be a number
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <input type="text" formControlName="hr_per_unit_rv" id="text-input" name="hr_per_unit_rv" class="form-control"
+                    placeholder="1 RV">
+                  <div class="invalid-feedback" *ngIf="submitted && f.hr_per_unit_rv.errors && f.hr_per_unit_rv.errors.required">
+                    RV is required
+                  </div>
+                  <div class="invalid-feedback" *ngIf="submitted && f.hr_per_unit_rv.errors && f.hr_per_unit_rv.errors.NotanNumber">
+                    Rv should be a number
+                  </div>
+                </div>
+              </div>
+
+
+              <strong>Production Capacity</strong>
+
+              <div class="form-group row">
+                <div class="col-md-6">
+                  <input type="text" formControlName="pc_pw" id="text-input" name="pc_pw" class="form-control"
+                    placeholder="Per week">
+                  <div class="invalid-feedback" *ngIf="submitted && f.pc_pw.errors && f.pc_pw.errors.required">
+                    Per Week is required
+                  </div>
+                  <div class="invalid-feedback" *ngIf="submitted && f.pc_pw.errors && f.pc_pw.errors.NotanNumber">
+                    Per Week should be a number
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <input type="text" formControlName="pc_pd" id="text-input" name="pc_pd" class="form-control"
+                    placeholder="Per day">
+                  <div class="invalid-feedback" *ngIf="submitted && f.pc_pd.errors && f.pc_pd.errors.required">
+                    Per day is required
+                  </div>
+                  <div class="invalid-feedback" *ngIf="submitted && f.pc_pd.errors && f.pc_pd.errors.NotanNumber">
+                    Per day should be a number
+                  </div>
+                </div>
+              </div>
+
+
+              <strong>Estimated Annual Volume</strong>
+
+              <div class="form-group row">
+                <div class="col-md-6">
+                  <input type="text" formControlName="eav_jc" id="text-input" name="eav_jc" class="form-control"
+                    placeholder="cases of Job Classification">
+                  <div class="invalid-feedback" *ngIf="submitted && f.eav_jc.errors && f.eav_jc.errors.required">
+                    Job Classification is required
+                  </div>
+                  <div class="invalid-feedback" *ngIf="submitted && f.eav_jc.errors && f.eav_jc.errors.NotanNumber">
+                    Job Classification should be a number
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <input type="text" formControlName="eav_rv" id="text-input" name="eav_rv" class="form-control"
+                    placeholder="Cases of Reference Verification">
+                  <div class="invalid-feedback" *ngIf="submitted && f.eav_rv.errors && f.eav_rv.errors.required">
+                    Reference Verification is required
+                  </div>
+                  <div class="invalid-feedback" *ngIf="submitted && f.eav_rv.errors && f.eav_rv.errors.NotanNumber">
+                    Reference Verification should be a number
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="ourKeyModal.hide()">Close</button>
+        <button type="submit" class="btn btn-primary" (click)="submit()">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>

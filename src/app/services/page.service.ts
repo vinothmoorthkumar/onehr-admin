@@ -23,6 +23,20 @@ export class PageService {
       }));
   }
 
+  // getExtra(slug) {
+  //   return this.http.get<any>(`/api/page/extras/${slug}`)
+  //     .pipe(map(data => {
+  //       return data;
+  //     }));
+  // }
+
+  updateExtra(slug,data) {
+    return this.http.put<any>(`/api/page/extras/${slug}`,data)
+      .pipe(map(data => {
+        return data;
+      }));
+  }
+
   update(slug,data) {
     return this.http.put<any>(`/api/page/${slug}`,data)
       .pipe(map(data => {
