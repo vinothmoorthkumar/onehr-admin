@@ -1,10 +1,11 @@
 const imageTypes = ["image/jpeg", "image/png", "image/jpg", "image/svg+xml"]
+import * as slug from '../../_slug';
 export const settings = {
     imageFormate: imageTypes,
     pages: [
         {
             name: 'Home',
-            key: 'home',
+            key: slug.slug.home,
             sections: [{
                 name: "slider",
                 key: "home_slider",
@@ -33,7 +34,7 @@ export const settings = {
         },
         {
             name: 'About Us',
-            key: 'about_us',
+            key: slug.slug.aboutus,
             sections: [{
                 name: "Our mandate",
                 key: "aboutUs_our_mandate",
@@ -57,7 +58,7 @@ export const settings = {
         },
         {
             name: 'Job Classification',
-            key: 'job-classification'
+            key: slug.slug.job_classification
         }
     ]
 };

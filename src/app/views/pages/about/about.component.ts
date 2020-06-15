@@ -5,7 +5,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ToastrService } from 'ngx-toastr';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import * as _ from 'underscore';
-
+import * as slug from '../../../_slug';
 @Component({
   selector: 'app-about',
   templateUrl: './about.component.html',
@@ -51,7 +51,7 @@ export class AboutComponent implements OnInit {
   }
 
   Isauth(access){
-    return this.auth.IsPageAuth('about_us',access);
+    return this.auth.IsPageAuth(slug.slug.aboutus,access);
   }
 
   addsec() {
@@ -71,7 +71,7 @@ export class AboutComponent implements OnInit {
       return ele.name == "" || ele.html == ""
     })
     if (!checkForm) {
-      this.service.update('about_us', obj).subscribe((response: any) => {
+      this.service.update(slug.slug.aboutus, obj).subscribe((response: any) => {
         this.toastr.success('Updated Successfully', 'Success');
       });
     } else {

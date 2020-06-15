@@ -5,7 +5,7 @@ import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import {PagesResolverService} from './pages.resolve';
 import { pageAuthGuard } from '../../helpers';
-
+import * as slug from '../../_slug';
 const routes: Routes = [
   {
     path: '',
@@ -25,7 +25,7 @@ const routes: Routes = [
         component: HomeComponent,
         data: {
           title: 'Home',
-          slug: 'home',
+          slug: slug.slug.home,
           access: 'view'
         },
         canActivate: [pageAuthGuard],
@@ -36,7 +36,7 @@ const routes: Routes = [
         component: AboutComponent,
         data: {
           title: 'About',
-          slug: 'about_us',
+          slug: slug.slug.aboutus,
           access: 'view'
         },
         canActivate: [pageAuthGuard],
