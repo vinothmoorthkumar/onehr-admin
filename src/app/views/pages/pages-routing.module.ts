@@ -3,7 +3,9 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
-import {PagesResolverService} from './pages.resolve';
+import { OurServiceJobClassComponent } from './our-services-job-classification/our-services-job-classification.component';
+
+import { PagesResolverService } from './pages.resolve';
 import { pageAuthGuard } from '../../helpers';
 import * as slug from '../../_slug';
 const routes: Routes = [
@@ -41,6 +43,17 @@ const routes: Routes = [
         },
         canActivate: [pageAuthGuard],
         resolve: { page: PagesResolverService }
+      },
+      {
+        path: 'our-services-job-classification',
+        component: OurServiceJobClassComponent,
+        data: {
+          title: 'Job Classification',
+          slug: slug.slug.job_classification,
+          access: 'view'
+        },
+        canActivate: [pageAuthGuard],
+        resolve: { page: PagesResolverService }
       }
     ]
   }
@@ -50,4 +63,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class PagesRoutingModule {}
+export class PagesRoutingModule { }

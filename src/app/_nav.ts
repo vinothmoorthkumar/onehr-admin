@@ -51,13 +51,12 @@ export const navItems: any = [
       },
       {
         name: 'Service',
-        url: '/buttons/brand-buttons',
         slug: slug.slug.service,
         page:true,
         children: [
           {
             name: 'Job Classification',
-            url: '/buttons/dropdowns',
+            url: '/pages/our-services-job-classification',
             slug: slug.slug.job_classification,
             page:true
           },

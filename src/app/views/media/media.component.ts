@@ -151,17 +151,13 @@ export class MediaComponent implements OnInit {
   progressStatus(event) {
     switch (event.type) {
       case HttpEventType.Sent:
-        console.log('Request has been made!');
         break;
       case HttpEventType.ResponseHeader:
-        console.log('Response header has been received!');
         break;
       case HttpEventType.UploadProgress:
         this.progress = Math.round(event.loaded / event.total * 100);
-        console.log(`Uploaded! ${this.progress}%`);
         break;
       case HttpEventType.Response:
-        console.log('created successfully !', event.body);
         this.closeUploadModal();
         this.fetchData();
         setTimeout(() => {
@@ -173,7 +169,6 @@ export class MediaComponent implements OnInit {
 
 
   submit() {
-    console.log('this.Form.value', this.Form.value)
     this.submitted = true;
     if (this.Form.invalid) {
       return;
@@ -205,7 +200,6 @@ export class MediaComponent implements OnInit {
   }
 
   resetForm() {
-    console.log('test reset')
     this.submitted = false;
     this.selectedFile = [];
     this.selectedSection='';

@@ -9,6 +9,7 @@ import { HomeComponent } from './home/home.component';
 // Components Routing
 import { PagesRoutingModule } from './pages-routing.module';
 import { AboutComponent } from './about/about.component';
+import { OurServiceJobClassComponent } from './our-services-job-classification/our-services-job-classification.component';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
@@ -28,7 +29,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   ],
   declarations: [
     HomeComponent,
-    AboutComponent
+    AboutComponent,
+    OurServiceJobClassComponent
   ]
 })
 export class PagesModule { }

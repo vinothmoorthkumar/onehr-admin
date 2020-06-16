@@ -22,9 +22,12 @@ export class ListComponent implements OnInit {
   }
   search = '';
   pageEvent: PageEvent;
-
+  superadmin = false;
   ngOnInit(): void {
     this.fetchData();
+    if(this.auth.IsSuperAdmin()){
+      this.superadmin = true;
+    }
   }
 
   Isauth(access){

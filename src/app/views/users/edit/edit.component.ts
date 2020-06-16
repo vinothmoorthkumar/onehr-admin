@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UsersService } from '../../../services';
+import { UsersService,AuthorizationService } from '../../../services';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
@@ -14,9 +14,11 @@ export class EditComponent implements OnInit {
   submitted = false;
   rolesList = [];
   edit = false;
+  superadmin = false;
   id: any;
   constructor(private formBuilder: FormBuilder,
     private toastr: ToastrService,
+    public auth: AuthorizationService,
     private router: Router, private route: ActivatedRoute,
     public service: UsersService) { }
 
@@ -42,6 +44,10 @@ export class EditComponent implements OnInit {
       this.edit = true;
       this.route.data.subscribe((response) => {
         let data = response.user.data;
+        if(this.auth.IsSuperAdmin()){
+          this.superadmin = true;
+        }
+        console.log('data',data)
         this.Form.setValue({
           name: data.name || '',
           username: data.username || '',

@@ -1,0 +1,43 @@
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-header">
+      <strong class="test">Job Classification</strong>
+      <span class="float-right">
+        <button class="btn btn-warning" (click)="shortCode.show()"><i class="fa fa-info-circle"></i></button>
+        <button class="btn btn-secondary" *ngIf="Isauth('add')" (click)="addsec()">Add new</button>
+        <button class="btn btn-primary" *ngIf="Isauth('update')" (click)="publish()">Publish</button>
+      </span>
+    </div>
+    <div cdkDropList class="example-list p-3" (cdkDropListDropped)="drop($event)">
+
+      <div class="animated fadeIn">
+        <div *ngFor="let section of sections; let i = index" class="card">
+          <div class="card-header" cdkDrag>
+            {{section.name}}
+            <div class="card-header-actions">
+              <button type="button" *ngIf="Isauth('delete')" (click)="deletesec(i)" class="btn btn-danger">
+                <i class="fa fa-trash"></i>
+              </button>
+              <button *ngIf="!section.collapse" type="button" class="btn btn-secondary" cdkDragHandle>
+                <i class="fa fa-arrows"></i>
+              </button>
+              <button type="button" class="btn btn-primary" (click)="section.collapse = !section.collapse">
+                <i *ngIf="section.collapse" class="fa fa-compress"></i>
+                <i *ngIf="!section.collapse" class="fa fa-expand"></i>
+              </button>
+            </div>
+          </div>
+          <div class="card-body" (collapsed)="collapsed($event)" (expanded)="expanded($event)"
+            [collapse]="!section.collapse">
+            <input type="text" class="form-control" [(ngModel)]="section.name" placeholder="Enter the Name of section"
+              required>
+            <br />
+            <angular-editor [config]="editorConfig" [placeholder]="'Enter text here...'" [(ngModel)]="section.html">
+            </angular-editor>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
