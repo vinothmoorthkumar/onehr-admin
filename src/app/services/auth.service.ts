@@ -20,10 +20,10 @@ export class AuthService {
         return this.currentUserSubject.value;
     }
 
-    getCurrentUser(){
-        let data= this.currentUserValue;
-        
-        return  this.helper.decodeToken(data.token);
+    getCurrentUser() {
+        let data = this.currentUserValue;
+
+        return this.helper.decodeToken(data.token);
     }
 
     login(username, password) {
@@ -40,5 +40,12 @@ export class AuthService {
         // remove user from local storage and set current user to null
         localStorage.removeItem('currentUser');
         this.currentUserSubject.next(null);
+    }
+
+    changePassword(data) {
+        return this.http.post<any>(`/api/auth/changepassword`, data)
+            .pipe(map(data => {
+                return data;
+            }));
     }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UsersService, AuthService } from '../../../services';
 import { ModalDirective } from 'ngx-bootstrap/modal';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-view',
@@ -16,7 +17,7 @@ export class ViewComponent implements OnInit {
   edit = false;
   Changesubmitted = false;
   id: any;
-  constructor(private formBuilder: FormBuilder, public service: UsersService, private auth: AuthService,) { }
+  constructor(private formBuilder: FormBuilder, public service: UsersService, private auth: AuthService,private toastr: ToastrService) { }
 
   checkPasswords(group: FormGroup) { // here we have the 'passwords' group
     let pass = group.get('password').value;
@@ -58,9 +59,13 @@ export class ViewComponent implements OnInit {
     if (this.PasswordForm.invalid) {
       return;
     }
-    this.service.changePassword(this.id, this.PasswordForm.value).subscribe((data: any[]) => {
+    let Obj=this.PasswordForm.value;
+    Obj['id']=this.id;
+    this.auth.changePassword(Obj).subscribe((data: any[]) => {
       this.changePasswordModal.hide();
+      this.toastr.success('Updated Successfully', 'Success');
     }, error => {
+      this.toastr.error(error.message, 'Error');
     });  
   }
 }

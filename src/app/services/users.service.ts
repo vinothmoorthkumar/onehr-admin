@@ -61,11 +61,6 @@ export class UsersService {
       }));
   }
 
-  changePassword(id,data) {
-    return this.http.post<any>(`/api/user/changepassword/${id}`,data)
-      .pipe(map(data => {
-        return data;
-      }));
-  }
+ 
 
 }
