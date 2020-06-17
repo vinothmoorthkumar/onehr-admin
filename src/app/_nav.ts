@@ -62,7 +62,7 @@ export const navItems: any = [
           },
           {
             name: 'Basic Reference Verification',
-            url: '/buttons/dropdowns',
+            url: '/pages/basic-reference-verification',
             slug: slug.slug.basic_reference_verification,
             page:true
           },

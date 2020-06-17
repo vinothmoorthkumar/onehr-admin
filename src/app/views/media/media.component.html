@@ -137,13 +137,15 @@
             <div *ngIf="selectedPage && selectedPage.length>0" class="form-group row">
               <label class="col-md-3 col-form-label">Section</label>
               <div class="col-md-9 col-form-label">
-                <div class="form-check">
+                
+                <!-- <div class="form-check">
                   <input formControlName="section" class="form-check-input" type="radio" name="section" id='noneSection'
                     value="none" checked>
                   <label class="form-check-label" for='noneSection'>
                     None
                   </label>
-                </div>
+                </div> -->
+
                 <div class="form-check" *ngFor="let section of selectedPage; index as i">
                   <input formControlName="section" (change)=changeSection(section); class="form-check-input"
                     type="radio" name="section" id={{section.key}} [value]="section.key" checked>
@@ -151,6 +153,7 @@
                     {{section.name}}
                   </label>
                 </div>
+
               </div>
             </div>
             <div *ngIf="selectedSection && selectedSection.extras">

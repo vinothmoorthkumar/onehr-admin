@@ -26,7 +26,6 @@ export class MediaService {
   }
 
   create(data, fileSize) {
-    console.log('data ser',data)
     var formData: any = new FormData();
     for(let i =0; i < data.files.length; i++){
       formData.append("files", data.files[i]);

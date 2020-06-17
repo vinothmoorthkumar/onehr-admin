@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { OurServiceJobClassComponent } from './our-services-job-classification/our-services-job-classification.component';
-
+import { BasicReferenceComponent } from './basic-reference-verification/basic-reference-verification.component'
 import { PagesResolverService } from './pages.resolve';
 import { pageAuthGuard } from '../../helpers';
 import * as slug from '../../_slug';
@@ -50,6 +50,17 @@ const routes: Routes = [
         data: {
           title: 'Job Classification',
           slug: slug.slug.job_classification,
+          access: 'view'
+        },
+        canActivate: [pageAuthGuard],
+        resolve: { page: PagesResolverService }
+      },
+      {
+        path: 'basic-reference-verification',
+        component: BasicReferenceComponent,
+        data: {
+          title: 'Basic Reference Verification',
+          slug: slug.slug.basic_reference_verification,
           access: 'view'
         },
         canActivate: [pageAuthGuard],

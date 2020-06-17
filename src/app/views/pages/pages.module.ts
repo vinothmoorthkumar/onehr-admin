@@ -10,6 +10,8 @@ import { HomeComponent } from './home/home.component';
 import { PagesRoutingModule } from './pages-routing.module';
 import { AboutComponent } from './about/about.component';
 import { OurServiceJobClassComponent } from './our-services-job-classification/our-services-job-classification.component';
+import { BasicReferenceComponent } from './basic-reference-verification/basic-reference-verification.component';
+
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
@@ -30,7 +32,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   declarations: [
     HomeComponent,
     AboutComponent,
-    OurServiceJobClassComponent
+    OurServiceJobClassComponent,
+    BasicReferenceComponent
   ]
 })
 export class PagesModule { }

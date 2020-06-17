@@ -7,12 +7,15 @@ export const settings = {
             name: 'Home',
             key: slug.slug.home,
             sections: [{
+                name: "None",
+                key: "none",
+            }, {
                 name: "slider",
                 key: "home_slider",
                 allowFiles: imageTypes,
                 extras: [
-                    { key: 'title', name: 'Title' ,inputType:'textbox'},
-                    { key: 'subtitle', name: 'SubTitle',inputType:'textbox' },
+                    { key: 'title', name: 'Title', inputType: 'textbox' },
+                    { key: 'subtitle', name: 'SubTitle', inputType: 'textbox' },
                     { key: 'link', name: 'Link' },
                     { key: 'button', name: 'Button Content' }
                 ]
@@ -35,30 +38,46 @@ export const settings = {
         {
             name: 'About Us',
             key: slug.slug.aboutus,
-            sections: [{
-                name: "Our mandate",
-                key: "aboutUs_our_mandate",
-                file: "single",
-                allowFiles: imageTypes
-            },
-            {
-                name: "Our Partners",
-                key: "aboutUs_our_partners",
-                file: "multiple",
-                allowFiles: imageTypes,
-                extras: [{ key: 'link', name: 'Link' }]
-            },
-            {
-                name: "Brochure",
-                key: "aboutUs_Brochure",
-                file: "single",
-                allowFiles: ['application/pdf']
-            }
+            sections: [
+                {
+                    name: "None",
+                    key: "none",
+                }, {
+                    name: "Our mandate",
+                    key: "aboutUs_our_mandate",
+                    file: "single",
+                    allowFiles: imageTypes
+                },
+                {
+                    name: "Our Partners",
+                    key: "aboutUs_our_partners",
+                    file: "multiple",
+                    allowFiles: imageTypes,
+                    extras: [{ key: 'link', name: 'Link' }]
+                },
+                {
+                    name: "Brochure",
+                    key: "aboutUs_Brochure",
+                    file: "single",
+                    allowFiles: ['application/pdf']
+                }
             ]
         },
         {
             name: 'Job Classification',
-            key: slug.slug.job_classification
+            key: slug.slug.job_classification,
+            sections: [{
+                name: "None",
+                key: "none",
+            }]
+        },
+        {
+            name: 'Basic Reference Verification',
+            key: slug.slug.basic_reference_verification,
+            sections: [{
+                name: "None",
+                key: "none",
+            }]
         }
     ]
 };
