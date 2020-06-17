@@ -84,7 +84,7 @@ const routes: Routes = [
         path: 'faq',
         component: faqComponent,
         data: {
-          title: 'Organization Design',
+          title: 'FAQ',
           slug: slug.slug.faq,
           access: 'view'
         },

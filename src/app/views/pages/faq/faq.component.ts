@@ -7,6 +7,7 @@ import * as _ from 'underscore';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import * as slug from '../../../_slug';
 import { ModalDirective } from 'ngx-bootstrap/modal';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-faq',
@@ -14,15 +15,37 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
   styleUrls: ['./faq.component.css']
 })
 export class faqComponent implements OnInit {
+  @ViewChild('ourKeyModal') public ourKeyModal: ModalDirective;
 
   html: string;
+  Form: FormGroup;
   submitted = false;
   sections = [];
-  slug= slug.slug.faq;
-
+  slug = slug.slug.faq;
+  faqSection = [
+    {
+      name: 'Candidates',
+      key: 'candidates'
+    },
+    {
+      name: 'Employers',
+      key: 'employers'
+    },
+    {
+      name: 'Partners',
+      key: 'partners'
+    }
+  ]
   editorConfig: AngularEditorConfig = {
     editable: true,
     sanitize: false,
+    fonts: [
+      {class: 'arial', name: 'Arial'},
+      {class: 'times-new-roman', name: 'Times New Roman'},
+      {class: 'calibri', name: 'Calibri'},
+      {class: 'Lora', name: 'Lora'},
+      {class: 'comic-sans-ms', name: 'Comic Sans MS'}
+    ],
     toolbarHiddenButtons: [
       [
         'insertImage',
@@ -32,7 +55,7 @@ export class faqComponent implements OnInit {
     ]
   };
 
-  constructor( private service: PageService, private route: ActivatedRoute,
+  constructor(private formBuilder: FormBuilder, private service: PageService, private route: ActivatedRoute,
     private auth: AuthorizationService,
     private toastr: ToastrService) { }
 
@@ -40,9 +63,14 @@ export class faqComponent implements OnInit {
     return Number(input.value) ? null : { NotanNumber: true };
   }
   ngOnInit(): void {
+    const form: any = {
+      hr_per_unit_jc: ['', Validators.required],
+      hr_per_unit_rv: ['', Validators.required],
+    };
 
+    this.Form = this.formBuilder.group(form);
     this.route.data.subscribe((response) => {
-      if(response.page.data && response.page.data.html){
+      if (response.page.data && response.page.data.html) {
         this.sections = response.page.data.html;
       }
     })
@@ -89,5 +117,17 @@ export class faqComponent implements OnInit {
     }
   }
 
+  submit() {
+    this.submitted = true;
+    // stop here if form is invalid
+    if (this.Form.invalid) {
+      return;
+    }
+    // this.service.updateExtra(slug.slug.home, { extras: this.Form.value }).subscribe((data: any[]) => {
+    //   this.ourKeyModal.hide();
+    //   this.toastr.success('Updated Successfully', 'Success');
+    // }, error => {
+    // });
+  }
 
 }
