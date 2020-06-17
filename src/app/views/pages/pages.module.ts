@@ -12,12 +12,12 @@ import { AboutComponent } from './about/about.component';
 import { OurServiceJobClassComponent } from './our-services-job-classification/our-services-job-classification.component';
 import { BasicReferenceComponent } from './basic-reference-verification/basic-reference-verification.component';
 import { OrgDesignComponent } from './organizational-design/organizational-design.component'
+import { faqComponent } from './faq/faq.component'
 
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 @NgModule({
   imports: [
     CommonModule,
@@ -35,7 +35,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AboutComponent,
     OurServiceJobClassComponent,
     BasicReferenceComponent,
-    OrgDesignComponent
+    OrgDesignComponent,
+    faqComponent
   ]
 })
 export class PagesModule { }

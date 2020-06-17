@@ -74,7 +74,7 @@ export const navItems: any = [
           },
           {
             name: 'FAQ',
-            url: '/buttons/dropdowns',
+            url: '/pages/faq',
             slug: slug.slug.faq,
             page:true
           },

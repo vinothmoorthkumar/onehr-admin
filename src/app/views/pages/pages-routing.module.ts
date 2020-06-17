@@ -6,6 +6,7 @@ import { AboutComponent } from './about/about.component';
 import { OurServiceJobClassComponent } from './our-services-job-classification/our-services-job-classification.component';
 import { BasicReferenceComponent } from './basic-reference-verification/basic-reference-verification.component'
 import { OrgDesignComponent } from './organizational-design/organizational-design.component'
+import { faqComponent } from './faq/faq.component';
 
 import { PagesResolverService } from './pages.resolve';
 import { pageAuthGuard } from '../../helpers';
@@ -74,6 +75,17 @@ const routes: Routes = [
         data: {
           title: 'Organization Design',
           slug: slug.slug.organizational_design,
+          access: 'view'
+        },
+        canActivate: [pageAuthGuard],
+        resolve: { page: PagesResolverService }
+      },
+      {
+        path: 'faq',
+        component: faqComponent,
+        data: {
+          title: 'Organization Design',
+          slug: slug.slug.faq,
           access: 'view'
         },
         canActivate: [pageAuthGuard],
