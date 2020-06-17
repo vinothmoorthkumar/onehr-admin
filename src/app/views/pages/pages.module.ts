@@ -2,7 +2,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { AngularEditorModule } from '@kolkov/angular-editor';
-import {DragDropModule} from '@angular/cdk/drag-drop';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { HomeComponent } from './home/home.component';
 
@@ -11,6 +11,7 @@ import { PagesRoutingModule } from './pages-routing.module';
 import { AboutComponent } from './about/about.component';
 import { OurServiceJobClassComponent } from './our-services-job-classification/our-services-job-classification.component';
 import { BasicReferenceComponent } from './basic-reference-verification/basic-reference-verification.component';
+import { OrgDesignComponent } from './organizational-design/organizational-design.component'
 
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
@@ -33,7 +34,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     HomeComponent,
     AboutComponent,
     OurServiceJobClassComponent,
-    BasicReferenceComponent
+    BasicReferenceComponent,
+    OrgDesignComponent
   ]
 })
 export class PagesModule { }

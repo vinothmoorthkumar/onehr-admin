@@ -68,7 +68,7 @@ export const navItems: any = [
           },
           {
             name: 'Organizational Design',
-            url: '/buttons/dropdowns',
+            url: '/pages/organizational-design',
             slug: slug.slug.organizational_design,
             page:true
           },

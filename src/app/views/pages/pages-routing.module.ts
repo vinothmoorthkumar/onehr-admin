@@ -5,6 +5,8 @@ import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { OurServiceJobClassComponent } from './our-services-job-classification/our-services-job-classification.component';
 import { BasicReferenceComponent } from './basic-reference-verification/basic-reference-verification.component'
+import { OrgDesignComponent } from './organizational-design/organizational-design.component'
+
 import { PagesResolverService } from './pages.resolve';
 import { pageAuthGuard } from '../../helpers';
 import * as slug from '../../_slug';
@@ -61,6 +63,17 @@ const routes: Routes = [
         data: {
           title: 'Basic Reference Verification',
           slug: slug.slug.basic_reference_verification,
+          access: 'view'
+        },
+        canActivate: [pageAuthGuard],
+        resolve: { page: PagesResolverService }
+      },
+      {
+        path: 'organizational-design',
+        component: OrgDesignComponent,
+        data: {
+          title: 'Organization Design',
+          slug: slug.slug.organizational_design,
           access: 'view'
         },
         canActivate: [pageAuthGuard],
