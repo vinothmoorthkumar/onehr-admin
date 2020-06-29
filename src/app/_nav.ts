@@ -82,7 +82,7 @@ export const navItems: any = [
       },
       {
         name: 'Contact',
-        url: '/buttons/dropdowns',
+        url: '/pages/contact',
         slug: slug.slug.contact,
         page:true
       },

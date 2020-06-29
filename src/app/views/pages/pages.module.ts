@@ -13,6 +13,7 @@ import { OurServiceJobClassComponent } from './our-services-job-classification/o
 import { BasicReferenceComponent } from './basic-reference-verification/basic-reference-verification.component';
 import { OrgDesignComponent } from './organizational-design/organizational-design.component'
 import { faqComponent } from './faq/faq.component'
+import { contactComponent } from './contact/contact.component'
 
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
@@ -36,7 +37,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     OurServiceJobClassComponent,
     BasicReferenceComponent,
     OrgDesignComponent,
-    faqComponent
+    faqComponent,
+    contactComponent
   ]
 })
 export class PagesModule { }

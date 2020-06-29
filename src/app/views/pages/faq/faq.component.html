@@ -3,7 +3,6 @@
     <div class="card-header">
       <strong class="test">Frequently Asked Questions</strong>
       <span class="float-right">
-        <button class="btn btn-secondary" *ngIf="Isauth('add')" (click)="ourKeyModal.show()">Add FAQ</button>
         <button class="btn btn-secondary" *ngIf="Isauth('add')" (click)="addsec()">Add new</button>
         <button class="btn btn-primary" *ngIf="Isauth('update')" (click)="publish()">Publish</button>
       </span>
