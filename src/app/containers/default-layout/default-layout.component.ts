@@ -21,7 +21,7 @@ export class DefaultLayoutComponent implements OnInit {
       const createArray = (array, i) => {
         let pageObj = [];
         let pushobj = () => {
-          if(array[i - 1].slug=='page' || array[i - 1].slug=='service'){
+          if(array[i - 1].slug=='page' || array[i - 1].noAdd){
             pageObj.push(array[i - 1])
           }
           if (array[i - 1].page && array[i - 1].slug && this.authorization.IsPageAuth(array[i - 1].slug,'view')) {

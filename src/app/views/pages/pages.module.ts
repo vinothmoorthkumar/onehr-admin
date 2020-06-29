@@ -14,7 +14,7 @@ import { BasicReferenceComponent } from './basic-reference-verification/basic-re
 import { OrgDesignComponent } from './organizational-design/organizational-design.component'
 import { faqComponent } from './faq/faq.component'
 import { contactComponent } from './contact/contact.component'
-
+import { AsgTranscriptComponent } from './asg-transcript/asg-transcript.component';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
@@ -38,6 +38,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     BasicReferenceComponent,
     OrgDesignComponent,
     faqComponent,
+    AsgTranscriptComponent,
     contactComponent
   ]
 })

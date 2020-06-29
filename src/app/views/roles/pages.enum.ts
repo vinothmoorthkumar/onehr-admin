@@ -9,7 +9,7 @@ const createArray = function (array, i) {
         if(array[i-1].children){
             createArray(array[i-1].children, 0)
         }
-        if(array[i-1].slug!='service'){
+        if(!array[i-1].noAdd){
             pageObj.push(array[i-1])
         }
         createArray(array, i)

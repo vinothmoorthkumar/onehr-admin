@@ -7,7 +7,8 @@ import { OurServiceJobClassComponent } from './our-services-job-classification/o
 import { BasicReferenceComponent } from './basic-reference-verification/basic-reference-verification.component'
 import { OrgDesignComponent } from './organizational-design/organizational-design.component'
 import { faqComponent } from './faq/faq.component';
-import { contactComponent } from './contact/contact.component'
+import { contactComponent } from './contact/contact.component';
+import { AsgTranscriptComponent } from './asg-transcript/asg-transcript.component';
 import { PagesResolverService } from './pages.resolve';
 import { pageAuthGuard } from '../../helpers';
 import * as slug from '../../_slug';
@@ -97,6 +98,17 @@ const routes: Routes = [
         data: {
           title: 'Contact',
           slug: slug.slug.contact,
+          access: 'view'
+        },
+        canActivate: [pageAuthGuard],
+        resolve: { page: PagesResolverService }
+      },
+      {
+        path: 'asg-transcript',
+        component: AsgTranscriptComponent,
+        data: {
+          title: 'Asg Transcript',
+          slug: slug.slug.asg_transcript,
           access: 'view'
         },
         canActivate: [pageAuthGuard],

@@ -52,6 +52,7 @@ export const navItems: any = [
       {
         name: 'Service',
         slug: slug.slug.service,
+        noAdd:true,
         page:true,
         children: [
           {
@@ -86,6 +87,19 @@ export const navItems: any = [
         slug: slug.slug.contact,
         page:true
       },
+      {
+        name: 'Others',
+        page:true,
+        noAdd:true,
+        children: [
+          {
+            name: 'Asg Transcript',
+            url: '/pages/asg-transcript',
+            slug: slug.slug.asg_transcript,
+            page:true
+          },
+        ]
+      }
     ]
   },
   {
