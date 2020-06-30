@@ -27,11 +27,11 @@ export class contactComponent implements OnInit {
     editable: true,
     sanitize: false,
     fonts: [
-      {class: 'arial', name: 'Arial'},
-      {class: 'times-new-roman', name: 'Times New Roman'},
-      {class: 'calibri', name: 'Calibri'},
-      {class: 'Lora', name: 'Lora'},
-      {class: 'comic-sans-ms', name: 'Comic Sans MS'}
+      { class: 'arial', name: 'Arial' },
+      { class: 'times-new-roman', name: 'Times New Roman' },
+      { class: 'calibri', name: 'Calibri' },
+      { class: 'Lora', name: 'Lora' },
+      { class: 'comic-sans-ms', name: 'Comic Sans MS' }
     ],
     toolbarHiddenButtons: [
       [
@@ -51,15 +51,21 @@ export class contactComponent implements OnInit {
   }
   ngOnInit(): void {
     const form: any = {
-      hr_per_unit_jc: ['', Validators.required],
-      hr_per_unit_rv: ['', Validators.required],
+      lng: ['', [Validators.required, this.isNumber]],
+      lat: ['', [Validators.required, this.isNumber]],
     };
 
     this.Form = this.formBuilder.group(form);
     this.route.data.subscribe((response) => {
-      if (response.page.data && response.page.data.html) {
-        this.sections = response.page.data.html;
+      this.sections = response.page.data.html;
+      if (response.page.data && response.page.data.extras) {
+        let data = response.page.data.extras;
+        this.Form.setValue({
+          lng: data.lng || '',
+          lat: data.lat || '',
+        });
       }
+
     })
   }
 
@@ -105,11 +111,19 @@ export class contactComponent implements OnInit {
   }
 
   submit() {
+    console.log('this.Form.value',this.Form.value)
     this.submitted = true;
     // stop here if form is invalid
     if (this.Form.invalid) {
       return;
     }
+    // lng: data.lng || '',
+    // lat: data.lat || '',
+    this.service.updateExtra(slug.slug.contact, { extras: {lng:parseFloat(this.Form.value.lng),lat:parseFloat(this.Form.value.lat)} }).subscribe((data: any[]) => {
+      this.ourKeyModal.hide();
+      this.toastr.success('Updated Successfully', 'Success');
+    }, error => {
+    });
   }
 
 }
